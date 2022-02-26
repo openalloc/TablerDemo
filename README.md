@@ -6,7 +6,7 @@ _TablerDemo_ is part of the [OpenAlloc](https://github.com/openalloc) family of 
 
 macOS | iOS
 :---:|:---:
-![](https://github.com/openalloc/SwiftTabler/blob/main/Images/macOSd.png)  |  ![](https://github.com/openalloc/SwiftTabler/blob/main/Images/iOSd.png)
+![](https://github.com/openalloc/TablerDemo/blob/main/Images/macOSd.png)  |  ![](https://github.com/openalloc/TablerDemo/blob/main/Images/iOSd.png)
 
 ## Features
 
