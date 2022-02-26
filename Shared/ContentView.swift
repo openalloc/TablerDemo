@@ -22,24 +22,70 @@ import Tabler
 
 struct ContentView: View {
     
+    private typealias Config = TablerConfig<Fruit>
+    private typealias Sort = TablerSort<Fruit>
+
+    // MARK: - Parameters
+
+    @State private var fruits: [Fruit]
+
     public init(_ fruits: [Fruit]) {
         _fruits = State(initialValue: fruits)
     }
+        
+    // MARK: - Locals
     
-    @State var fruits: [Fruit]
-    
-    private typealias Config = TablerConfig<Fruit>
-    private typealias Sort = TablerSort<Fruit>
-    
-    private let minWidth: CGFloat = 600
+    private let minWidth: CGFloat = 400
     private let title = "Tabler Demo"
     
     private var gridItems: [GridItem] = [
-        GridItem(.flexible(minimum: 10, maximum: 40), alignment: .leading),
+        GridItem(.flexible(minimum: 35, maximum: 40), alignment: .leading),
         GridItem(.flexible(minimum: 100), alignment: .leading),
-        GridItem(.flexible(minimum: 40), alignment: .trailing),
-        GridItem(.flexible(minimum: 40), alignment: .leading),
+        GridItem(.flexible(minimum: 40, maximum: 80), alignment: .trailing),
+        GridItem(.flexible(minimum: 35, maximum: 50), alignment: .leading),
     ]
+    
+    @State private var selected: Fruit.ID? = nil
+    @State private var mselected = Set<String>()
+    @State private var toEdit: Fruit? = nil
+    @State private var isAdd: Bool = false
+    @State private var colorize: Bool = false
+    @State private var headerize: Bool = true
+    
+    private var myToolbar: FruitToolbar {
+        FruitToolbar(colorize: $colorize, headerize: $headerize)
+    }
+    
+    private var listConfig: TablerListConfig<Fruit> {
+        TablerListConfig<Fruit>(onRowColor: rowColorAction)
+    }
+    
+    private var stackConfig: TablerStackConfig<Fruit> {
+        TablerStackConfig<Fruit>(onRowColor: rowColorAction)
+    }
+    
+    // MARK: - Views
+    
+    var body: some View {
+        NavigationView {
+            List {
+                Section("List-based") {
+                    lists
+                }
+                
+                Section("Stack-based") {
+                    stacks
+                }
+            }
+#if os(iOS)
+            .navigationTitle(title)
+#endif
+        }
+        .navigationViewStyle(DoubleColumnNavigationViewStyle())
+#if os(macOS)
+        .navigationTitle(title)
+#endif
+    }
     
     private func header(_ ctx: TablerSortContext<Fruit>) -> some View {
         LazyVGrid(columns: gridItems) {
@@ -58,9 +104,11 @@ struct ContentView: View {
     private func row(_ element: Fruit) -> some View {
         LazyVGrid(columns: gridItems) {
             Text(element.id)
-            Text(element.name).foregroundColor(element.color)
+            Text(element.name).foregroundColor(colorize ? .primary : element.color)
             Text(String(format: "%.0f g", element.weight))
-            Image(systemName: "rectangle.fill").foregroundColor(element.color)
+            Image(systemName: "rectangle.fill")
+                .foregroundColor(element.color)
+                .border(colorize ? Color.primary : Color.clear)
         }
         .padding(.horizontal)
         .padding(.vertical, 5)
@@ -72,6 +120,7 @@ struct ContentView: View {
             Text(element.wrappedValue.id)
             TextField("Name", text: element.name)
                 .textFieldStyle(.roundedBorder)
+                .border(Color.secondary)
             Text(String(format: "%.0f g", element.wrappedValue.weight))
             ColorPicker("Color", selection: element.color)
                 .labelsHidden()
@@ -80,71 +129,22 @@ struct ContentView: View {
         .padding(.vertical, 5)
     }
     
-    private var config: TablerConfig<Fruit> {
-        TablerConfig<Fruit>(
-            onRowColor: colorize ? { (.primary, $0.color) } : nil)
-    }
-    
-    private var listConfig: TablerListConfig<Fruit> {
-        TablerListConfig<Fruit>(onRowColor: config.onRowColor)
-    }
-    
-    private var stackConfig: TablerStackConfig<Fruit> {
-        TablerStackConfig<Fruit>(onRowColor: config.onRowColor)
-    }
-    
-    // MARK: - Locals
-    
-    @State private var selected: Fruit.ID? = nil
-    @State private var mselected = Set<String>()
-    @State private var toEdit: Fruit? = nil
-    @State private var isAdd: Bool = false
-    @State private var colorize: Bool = false
-    @State private var headerize: Bool = true
-    
-    var body: some View {
-        NavigationView {
-            List {
-                Section("List-based") {
-                    lists
-                }
-                
-                Section("Stack-based") {
-                    stacks
-                }
-            }
-#if os(iOS)
-            .navigationTitle(title)
-#endif
-        }
-        .navigationViewStyle(DoubleColumnNavigationViewStyle())
-        .toolbar {
-            ToolbarItemGroup {
-                Toggle(isOn: $colorize) { Text("Colorize") }
-                Toggle(isOn: $headerize) { Text("Header") }
-            }
-        }
-#if os(macOS)
-        .navigationTitle(title)
-#endif
-    }
-    
     @ViewBuilder
-    private var lists: some View {
-        NavigationLink("TablerList") { listView }
-        NavigationLink("TablerList1") { list1View }
-        NavigationLink("TablerListM") { listMView }
-        NavigationLink("TablerListB") { listBView }
-        NavigationLink("TablerList1B") { list1BView }
-        NavigationLink("TablerListMB") { listMBView }
+    var lists: some View {
+        NavigationLink("TablerList"   ) { listView  .toolbar { myToolbar }}
+        NavigationLink("TablerList1"  ) { list1View .toolbar { myToolbar }}
+        NavigationLink("TablerListM"  ) { listMView .toolbar { myToolbar }}
+        NavigationLink("TablerListB"  ) { listBView .toolbar { myToolbar }}
+        NavigationLink("TablerList1B" ) { list1BView.toolbar { myToolbar }}
+        NavigationLink("TablerListMB" ) { listMBView.toolbar { myToolbar }}
     }
     
     @ViewBuilder
     private var stacks: some View {
-        NavigationLink("TablerStack") { stackView }
-        NavigationLink("TablerStack1") { stack1View }
-        NavigationLink("TablerStackB") { stackBView }
-        NavigationLink("TablerStack1B") { stack1BView }
+        NavigationLink("TablerStack"  ) { stackView  .toolbar { myToolbar }}
+        NavigationLink("TablerStack1" ) { stack1View .toolbar { myToolbar }}
+        NavigationLink("TablerStackB" ) { stackBView .toolbar { myToolbar }}
+        NavigationLink("TablerStack1B") { stack1BView.toolbar { myToolbar }}
     }
     
     // MARK: - List Views
@@ -322,6 +322,25 @@ struct ContentView: View {
                               results: $fruits,
                               selected: $selected)
             }
+        }
+    }
+    
+    // MARK: - Action Handlers
+    
+    private var rowColorAction: TablerConfig<Fruit>.OnRowColor? {
+        colorize ? { (.primary, $0.color) } : nil
+    }
+}
+
+struct FruitToolbar: ToolbarContent {
+    @Binding var colorize: Bool
+    @Binding var headerize: Bool
+
+    //private var toolbarGroup: ToolbarItemGroup {
+    var body: some ToolbarContent {
+        ToolbarItemGroup {
+            Toggle(isOn: $colorize) { Text("Colorize") }
+            Toggle(isOn: $headerize) { Text("Header") }
         }
     }
 }

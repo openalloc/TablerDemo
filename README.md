@@ -4,6 +4,10 @@ A demonstration of _SwiftTabler_, a multi-platform SwiftUI component for display
 
 _TablerDemo_ is part of the [OpenAlloc](https://github.com/openalloc) family of open source Swift software tools.
 
+macOS | iOS
+:---:|:---:
+![](https://github.com/openalloc/SwiftTabler/blob/main/Images/macOSd.png)  |  ![](https://github.com/openalloc/SwiftTabler/blob/main/Images/iOSd.png)
+
 ## Features
 
 * Demonstrates the various features of the _SwiftTabler_ SwiftUI component
