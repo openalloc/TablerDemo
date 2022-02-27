@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+// ContentView.swift
 //
 // Copyright 2022 FlowAllocator LLC
 //
@@ -57,13 +57,17 @@ struct ContentView: View {
     }
     
     private var listConfig: TablerListConfig<Fruit> {
-        TablerListConfig<Fruit>(onRowColor: rowColorAction)
+        TablerListConfig<Fruit>(gridItems: gridItems, onRowColor: rowColorAction)
     }
     
     private var stackConfig: TablerStackConfig<Fruit> {
-        TablerStackConfig<Fruit>(onRowColor: rowColorAction)
+        TablerStackConfig<Fruit>(gridItems: gridItems, onRowColor: rowColorAction)
     }
     
+    private var gridConfig: TablerGridConfig<Fruit> {
+        TablerGridConfig<Fruit>(gridItems: gridItems, onRowColor: rowColorAction)
+    }
+
     // MARK: - Views
     
     var body: some View {
@@ -76,6 +80,10 @@ struct ContentView: View {
                 Section("Stack-based") {
                     stacks
                 }
+                
+                Section("Grid-based") {
+                    grids
+                }
             }
 #if os(iOS)
             .navigationTitle(title)
@@ -87,46 +95,38 @@ struct ContentView: View {
 #endif
     }
     
+    @ViewBuilder
     private func header(_ ctx: TablerSortContext<Fruit>) -> some View {
-        LazyVGrid(columns: gridItems) {
-            Text("ID \(Sort.indicator(ctx, \.id))")
-                .onTapGesture { tablerSort(ctx, &fruits, \.id) { $0.id < $1.id } }
-            Text("Name \(Sort.indicator(ctx, \.name))")
-                .onTapGesture { tablerSort(ctx, &fruits, \.name) { $0.name < $1.name } }
-            Text("Weight \(Sort.indicator(ctx, \.weight))")
-                .onTapGesture { tablerSort(ctx, &fruits, \.weight) { $0.weight < $1.weight } }
-            Text("Color")
-        }
-        .padding(.horizontal)
+        Text("ID \(Sort.indicator(ctx, \.id))")
+            .onTapGesture { tablerSort(ctx, &fruits, \.id) { $0.id < $1.id } }
+        Text("Name \(Sort.indicator(ctx, \.name))")
+            .onTapGesture { tablerSort(ctx, &fruits, \.name) { $0.name < $1.name } }
+        Text("Weight \(Sort.indicator(ctx, \.weight))")
+            .onTapGesture { tablerSort(ctx, &fruits, \.weight) { $0.weight < $1.weight } }
+        Text("Color")
     }
     
     // UNBOUND value row (read-only)
+    @ViewBuilder
     private func row(_ element: Fruit) -> some View {
-        LazyVGrid(columns: gridItems) {
-            Text(element.id)
-            Text(element.name).foregroundColor(colorize ? .primary : element.color)
-            Text(String(format: "%.0f g", element.weight))
-            Image(systemName: "rectangle.fill")
-                .foregroundColor(element.color)
-                .border(colorize ? Color.primary : Color.clear)
-        }
-        .padding(.horizontal)
-        .padding(.vertical, 5)
+        Text(element.id)
+        Text(element.name).foregroundColor(colorize ? .primary : element.color)
+        Text(String(format: "%.0f g", element.weight))
+        Image(systemName: "rectangle.fill")
+            .foregroundColor(element.color)
+            .border(colorize ? Color.primary : Color.clear)
     }
     
     // BOUND value row (with direct editing)
+    @ViewBuilder
     private func brow(_ element: Binding<Fruit>) -> some View {
-        LazyVGrid(columns: gridItems) {
-            Text(element.wrappedValue.id)
-            TextField("Name", text: element.name)
-                .textFieldStyle(.roundedBorder)
-                .border(Color.secondary)
-            Text(String(format: "%.0f g", element.wrappedValue.weight))
-            ColorPicker("Color", selection: element.color)
-                .labelsHidden()
-        }
-        .padding(.horizontal)
-        .padding(.vertical, 5)
+        Text(element.wrappedValue.id)
+        TextField("Name", text: element.name)
+            .textFieldStyle(.roundedBorder)
+            .border(Color.secondary)
+        Text(String(format: "%.0f g", element.wrappedValue.weight))
+        ColorPicker("Color", selection: element.color)
+            .labelsHidden()
     }
     
     @ViewBuilder
@@ -145,6 +145,11 @@ struct ContentView: View {
         NavigationLink("TablerStack1" ) { stack1View .toolbar { myToolbar }}
         NavigationLink("TablerStackB" ) { stackBView .toolbar { myToolbar }}
         NavigationLink("TablerStack1B") { stack1BView.toolbar { myToolbar }}
+    }
+    
+    @ViewBuilder
+    private var grids: some View {
+        NavigationLink("TablerGrid"   ) { gridView  .toolbar { myToolbar }}
     }
     
     // MARK: - List Views
@@ -321,6 +326,23 @@ struct ContentView: View {
                               selectContent: { SelectBorder(colorize && $0) },
                               results: $fruits,
                               selected: $selected)
+            }
+        }
+    }
+    
+    // MARK: - Stack Views
+    
+    private var gridView: some View {
+        SidewaysScroller(minWidth: minWidth) {
+            if headerize {
+                TablerGrid(gridConfig,
+                           headerContent: header,
+                           rowContent: row,
+                           results: fruits)
+            } else {
+                TablerGrid(gridConfig,
+                           rowContent: row,
+                           results: fruits)
             }
         }
     }
