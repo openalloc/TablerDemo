@@ -18,7 +18,7 @@
 
 import SwiftUI
 
-struct Fruit: Identifiable, Hashable {
+struct Fruit: Identifiable {
     var id: String
     var name: String
     var weight: Double

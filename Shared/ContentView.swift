@@ -23,6 +23,7 @@ import Tabler
 struct ContentView: View {
     
     private typealias Config = TablerConfig<Fruit>
+    private typealias Context = TablerContext<Fruit>
     private typealias Sort = TablerSort<Fruit>
 
     // MARK: - Parameters
@@ -96,12 +97,12 @@ struct ContentView: View {
     }
     
     @ViewBuilder
-    private func header(_ ctx: TablerSortContext<Fruit>) -> some View {
-        Text("ID \(Sort.indicator(ctx, \.id))")
+    private func header(_ ctx: Binding<Context>) -> some View {
+        Sort.columnTitle("ID", ctx, \.id)
             .onTapGesture { tablerSort(ctx, &fruits, \.id) { $0.id < $1.id } }
-        Text("Name \(Sort.indicator(ctx, \.name))")
+        Sort.columnTitle("Name", ctx, \.name)
             .onTapGesture { tablerSort(ctx, &fruits, \.name) { $0.name < $1.name } }
-        Text("Weight \(Sort.indicator(ctx, \.weight))")
+        Sort.columnTitle("Weight", ctx, \.weight)
             .onTapGesture { tablerSort(ctx, &fruits, \.weight) { $0.weight < $1.weight } }
         Text("Color")
     }
