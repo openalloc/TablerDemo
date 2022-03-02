@@ -40,9 +40,9 @@ struct ContentView: View {
     private let title = "Tabler Demo"
     
     private var gridItems: [GridItem] = [
-        GridItem(.flexible(minimum: 35, maximum: 40), alignment: .leading),
-        GridItem(.flexible(minimum: 100), alignment: .leading),
-        GridItem(.flexible(minimum: 40, maximum: 80), alignment: .trailing),
+        GridItem(.flexible(minimum: 35, maximum: 50), alignment: .leading),
+        GridItem(.flexible(minimum: 100, maximum: 200), alignment: .leading),
+        GridItem(.flexible(minimum: 90, maximum: 100), alignment: .trailing),
         GridItem(.flexible(minimum: 35, maximum: 50), alignment: .leading),
     ]
     
