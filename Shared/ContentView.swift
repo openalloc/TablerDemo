@@ -78,11 +78,11 @@ struct ContentView: View {
     }
     
     private var listConfig: TablerListConfig<Fruit> {
-        TablerListConfig<Fruit>(gridItems: gridItems, onRowColor: rowColorAction)
+        TablerListConfig<Fruit>(onRowColor: rowColorAction)
     }
     
     private var stackConfig: TablerStackConfig<Fruit> {
-        TablerStackConfig<Fruit>(gridItems: gridItems, onRowColor: rowColorAction)
+        TablerStackConfig<Fruit>(onRowColor: rowColorAction)
     }
     
     private var gridConfig: TablerGridConfig<Fruit> {
@@ -116,20 +116,32 @@ struct ContentView: View {
 #endif
     }
     
-    @ViewBuilder
     private func header(_ ctx: Binding<Context>) -> some View {
-        Sort.columnTitle("ID", ctx, \.id)
-            .onTapGesture { tablerSort(ctx, &fruits, \.id) { $0.id < $1.id } }
-        Sort.columnTitle("Name", ctx, \.name)
-            .onTapGesture { tablerSort(ctx, &fruits, \.name) { $0.name < $1.name } }
-        Sort.columnTitle("Weight", ctx, \.weight)
-            .onTapGesture { tablerSort(ctx, &fruits, \.weight) { $0.weight < $1.weight } }
-        Text("Color")
+        LazyVGrid(columns: gridItems) {
+            Sort.columnTitle("ID", ctx, \.id)
+                .onTapGesture { tablerSort(ctx, &fruits, \.id) { $0.id < $1.id } }
+            Sort.columnTitle("Name", ctx, \.name)
+                .onTapGesture { tablerSort(ctx, &fruits, \.name) { $0.name < $1.name } }
+            Sort.columnTitle("Weight", ctx, \.weight)
+                .onTapGesture { tablerSort(ctx, &fruits, \.weight) { $0.weight < $1.weight } }
+            Text("Color")
+        }
     }
     
     // UNBOUND value row (read-only)
-    @ViewBuilder
     private func row(_ element: Fruit) -> some View {
+        LazyVGrid(columns: gridItems) {
+            Text(element.id)
+            Text(element.name).foregroundColor(colorize ? .primary : element.color)
+            Text(String(format: "%.0f g", element.weight))
+            Image(systemName: "rectangle.fill")
+                .foregroundColor(element.color)
+                .border(colorize ? Color.primary : Color.clear)
+        }
+    }
+    
+    @ViewBuilder
+    private func gridRow(_ element: Fruit) -> some View {
         Text(element.id)
         Text(element.name).foregroundColor(colorize ? .primary : element.color)
         Text(String(format: "%.0f g", element.weight))
@@ -139,15 +151,16 @@ struct ContentView: View {
     }
     
     // BOUND value row (with direct editing)
-    @ViewBuilder
     private func brow(_ element: Binding<Fruit>) -> some View {
-        Text(element.wrappedValue.id)
-        TextField("Name", text: element.name)
-            .textFieldStyle(.roundedBorder)
-            .border(Color.secondary)
-        Text(String(format: "%.0f g", element.wrappedValue.weight))
-        ColorPicker("Color", selection: element.color)
-            .labelsHidden()
+        LazyVGrid(columns: gridItems) {
+            Text(element.wrappedValue.id)
+            TextField("Name", text: element.name)
+                .textFieldStyle(.roundedBorder)
+                .border(Color.secondary)
+            Text(String(format: "%.0f g", element.wrappedValue.weight))
+            ColorPicker("Color", selection: element.color)
+                .labelsHidden()
+        }
     }
     
     @ViewBuilder
@@ -181,7 +194,6 @@ struct ContentView: View {
                 TablerList(listConfig,
                            headerContent: header,
                            rowContent: row,
-                           rowModifier: { _ in SubheadlineModifier() },
                            results: fruits)
             } else {
                 TablerList(listConfig,
