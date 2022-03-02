@@ -117,7 +117,7 @@ struct ContentView: View {
     }
     
     private func header(_ ctx: Binding<Context>) -> some View {
-        LazyVGrid(columns: gridItems) {
+        LazyVGrid(columns: gridItems, alignment: .leading) {
             Sort.columnTitle("ID", ctx, \.id)
                 .onTapGesture { tablerSort(ctx, &fruits, \.id) { $0.id < $1.id } }
             Sort.columnTitle("Name", ctx, \.name)
@@ -130,7 +130,7 @@ struct ContentView: View {
     
     // UNBOUND value row (read-only)
     private func row(_ element: Fruit) -> some View {
-        LazyVGrid(columns: gridItems) {
+        LazyVGrid(columns: gridItems, alignment: .leading) {
             Text(element.id)
             Text(element.name).foregroundColor(colorize ? .primary : element.color)
             Text(String(format: "%.0f g", element.weight))
@@ -152,7 +152,7 @@ struct ContentView: View {
     
     // BOUND value row (with direct editing)
     private func brow(_ element: Binding<Fruit>) -> some View {
-        LazyVGrid(columns: gridItems) {
+        LazyVGrid(columns: gridItems, alignment: .leading) {
             Text(element.wrappedValue.id)
             TextField("Name", text: element.name)
                 .textFieldStyle(.roundedBorder)
