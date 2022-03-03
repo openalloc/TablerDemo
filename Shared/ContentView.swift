@@ -20,6 +20,10 @@ import SwiftUI
 
 import Tabler
 
+extension TablerListConfig: ObservableObject {}
+extension TablerStackConfig: ObservableObject {}
+extension TablerGridConfig: ObservableObject {}
+
 struct ContentView: View {
     
     private typealias Config = TablerConfig<Fruit>
@@ -57,18 +61,10 @@ struct ContentView: View {
         FruitToolbar(colorize: $colorize, headerize: $headerize)
     }
     
-    private var listConfig: TablerListConfig<Fruit> {
-        TablerListConfig<Fruit>(onRowColor: rowColorAction)
-    }
+    @ObservedObject var listConfig = TablerListConfig<Fruit>()
+    @ObservedObject var stackConfig = TablerStackConfig<Fruit>()
+    @ObservedObject var gridConfig = TablerGridConfig<Fruit>()
     
-    private var stackConfig: TablerStackConfig<Fruit> {
-        TablerStackConfig<Fruit>(onRowColor: rowColorAction)
-    }
-    
-    private var gridConfig: TablerGridConfig<Fruit> {
-        TablerGridConfig<Fruit>(gridItems: gridItems, onRowColor: rowColorAction)
-    }
-
     // MARK: - Views
     
     var body: some View {
@@ -94,6 +90,12 @@ struct ContentView: View {
 #if os(macOS)
         .navigationTitle(title)
 #endif
+        .onAppear {
+            listConfig.onRowColor = rowColorAction
+            stackConfig.onRowColor = rowColorAction
+            gridConfig.onRowColor = rowColorAction
+            gridConfig.gridItems = gridItems
+        }
     }
     
     private func header(_ ctx: Binding<Context>) -> some View {
