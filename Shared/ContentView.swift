@@ -20,26 +20,6 @@ import SwiftUI
 
 import Tabler
 
-struct Alpha: ViewModifier
-{
-    func body(content: Content) -> some View {
-        content
-            .opacity(0.5)
-            .contextMenu {
-                Button(action: {}) { Text("Hello") }
-                Button(action: {}) { Text("World") }
-            }
-    }
-}
-
-struct SubheadlineModifier: ViewModifier {
-    func body(content: Content) -> some View {
-        content
-            .foregroundColor(.secondary)
-            .font(.subheadline)
-    }
-}
-
 struct ContentView: View {
     
     private typealias Config = TablerConfig<Fruit>
