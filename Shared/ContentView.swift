@@ -47,7 +47,7 @@ struct ContentView: View {
     ]
     
     @State private var selected: Fruit.ID? = nil
-    @State private var mselected = Set<String>()
+    @State private var mselected = Set<Fruit.ID>()
     @State private var toEdit: Fruit? = nil
     @State private var isAdd: Bool = false
     @State private var colorize: Bool = false
