@@ -17,7 +17,6 @@
 //
 
 import SwiftUI
-
 import Tabler
 
 struct ContentView: View {
@@ -47,28 +46,32 @@ struct ContentView: View {
     ]
     
     @State private var selected: Fruit.ID? = nil
-    @State private var mselected = Set<String>()
-    @State private var toEdit: Fruit? = nil
-    @State private var isAdd: Bool = false
+    @State private var mselected = Set<Fruit.ID>()
     @State private var colorize: Bool = false
     @State private var headerize: Bool = true
     
-    private var myToolbar: FruitToolbar {
-        FruitToolbar(colorize: $colorize, headerize: $headerize)
+    private func getConfig(rowSpacing: CGFloat,
+                           insets: EdgeInsets) -> Config {
+        TablerConfig(onRowColor: { (.primary, colorize ? $0.color : .clear) },
+                     rowSpacing: rowSpacing,
+                     paddingInsets: insets)
     }
     
-    private var listConfig: TablerListConfig<Fruit> {
-        TablerListConfig<Fruit>(gridItems: gridItems, onRowColor: rowColorAction)
-    }
-    
-    private var stackConfig: TablerStackConfig<Fruit> {
-        TablerStackConfig<Fruit>(gridItems: gridItems, onRowColor: rowColorAction)
-    }
-    
-    private var gridConfig: TablerGridConfig<Fruit> {
-        TablerGridConfig<Fruit>(gridItems: gridItems, onRowColor: rowColorAction)
+    private var listConfig: Config {
+        getConfig(rowSpacing: TablerConfigDefaults.rowSpacing,
+                  insets: TablerConfigDefaults.paddingInsets)
     }
 
+    private var stackConfig: Config {
+        getConfig(rowSpacing: TablerStackConfigDefaults.rowSpacing,
+                  insets: TablerStackConfigDefaults.paddingInsets)
+    }
+    
+    private var gridConfig: Config {
+        getConfig(rowSpacing: TablerGridConfigDefaults.rowSpacing,
+                  insets: TablerGridConfigDefaults.paddingInsets)
+    }
+    
     // MARK: - Views
     
     var body: some View {
@@ -77,11 +80,11 @@ struct ContentView: View {
                 Section("List-based") {
                     lists
                 }
-                
+
                 Section("Stack-based") {
                     stacks
                 }
-                
+
                 Section("Grid-based") {
                     grids
                 }
@@ -94,22 +97,41 @@ struct ContentView: View {
 #if os(macOS)
         .navigationTitle(title)
 #endif
+        .toolbar {
+            ToolbarItemGroup {
+                Toggle(isOn: $colorize) { Text("Colorize") }
+                Button(action: { fruits.shuffle() }) { Text("Shuffle") }
+                Toggle(isOn: $headerize) { Text("Header") }
+            }
+        }
     }
     
-    @ViewBuilder
     private func header(_ ctx: Binding<Context>) -> some View {
-        Sort.columnTitle("ID", ctx, \.id)
-            .onTapGesture { tablerSort(ctx, &fruits, \.id) { $0.id < $1.id } }
-        Sort.columnTitle("Name", ctx, \.name)
-            .onTapGesture { tablerSort(ctx, &fruits, \.name) { $0.name < $1.name } }
-        Sort.columnTitle("Weight", ctx, \.weight)
-            .onTapGesture { tablerSort(ctx, &fruits, \.weight) { $0.weight < $1.weight } }
-        Text("Color")
+        LazyVGrid(columns: gridItems, alignment: .leading) {
+            Sort.columnTitle("ID", ctx, \.id)
+                .onTapGesture { tablerSort(ctx, &fruits, \.id) { $0.id < $1.id } }
+            Sort.columnTitle("Name", ctx, \.name)
+                .onTapGesture { tablerSort(ctx, &fruits, \.name) { $0.name < $1.name } }
+            Sort.columnTitle("Weight", ctx, \.weight)
+                .onTapGesture { tablerSort(ctx, &fruits, \.weight) { $0.weight < $1.weight } }
+            Text("Color")
+        }
     }
     
     // UNBOUND value row (read-only)
-    @ViewBuilder
     private func row(_ element: Fruit) -> some View {
+        LazyVGrid(columns: gridItems, alignment: .leading) {
+            Text(element.id)
+            Text(element.name).foregroundColor(colorize ? .primary : element.color)
+            Text(String(format: "%.0f g", element.weight))
+            Image(systemName: "rectangle.fill")
+                .foregroundColor(element.color)
+                .border(colorize ? Color.primary : Color.clear)
+        }
+    }
+    
+    @ViewBuilder
+    private func gridRow(_ element: Fruit) -> some View {
         Text(element.id)
         Text(element.name).foregroundColor(colorize ? .primary : element.color)
         Text(String(format: "%.0f g", element.weight))
@@ -117,40 +139,41 @@ struct ContentView: View {
             .foregroundColor(element.color)
             .border(colorize ? Color.primary : Color.clear)
     }
-    
+
     // BOUND value row (with direct editing)
-    @ViewBuilder
     private func brow(_ element: Binding<Fruit>) -> some View {
-        Text(element.wrappedValue.id)
-        TextField("Name", text: element.name)
-            .textFieldStyle(.roundedBorder)
-            .border(Color.secondary)
-        Text(String(format: "%.0f g", element.wrappedValue.weight))
-        ColorPicker("Color", selection: element.color)
-            .labelsHidden()
+        LazyVGrid(columns: gridItems, alignment: .leading) {
+            Text(element.wrappedValue.id)
+            TextField("Name", text: element.name)
+                .textFieldStyle(.roundedBorder)
+                .border(Color.secondary)
+            Text(String(format: "%.0f g", element.wrappedValue.weight))
+            ColorPicker("Color", selection: element.color)
+                .labelsHidden()
+        }
     }
     
     @ViewBuilder
     var lists: some View {
-        NavigationLink("TablerList"   ) { listView  .toolbar { myToolbar }}
-        NavigationLink("TablerList1"  ) { list1View .toolbar { myToolbar }}
-        NavigationLink("TablerListM"  ) { listMView .toolbar { myToolbar }}
-        NavigationLink("TablerListB"  ) { listBView .toolbar { myToolbar }}
-        NavigationLink("TablerList1B" ) { list1BView.toolbar { myToolbar }}
-        NavigationLink("TablerListMB" ) { listMBView.toolbar { myToolbar }}
+        NavigationLink("TablerList"   ) { listView }
+        NavigationLink("TablerList1"  ) { list1View    }
+        NavigationLink("TablerListM"  ) { listMView    }
+        NavigationLink("TablerListB"  ) { listBView    }
+        NavigationLink("TablerList1B" ) { list1BView    }
+        NavigationLink("TablerListMB" ) { listMBView    }
     }
-    
+
     @ViewBuilder
     private var stacks: some View {
-        NavigationLink("TablerStack"  ) { stackView  .toolbar { myToolbar }}
-        NavigationLink("TablerStack1" ) { stack1View .toolbar { myToolbar }}
-        NavigationLink("TablerStackB" ) { stackBView .toolbar { myToolbar }}
-        NavigationLink("TablerStack1B") { stack1BView.toolbar { myToolbar }}
+        NavigationLink("TablerStack"  ) { stackView }
+        NavigationLink("TablerStack1" ) { stack1View }
+        NavigationLink("TablerStackB" ) { stackBView }
+        NavigationLink("TablerStack1B") { stack1BView }
     }
-    
+
     @ViewBuilder
     private var grids: some View {
-        NavigationLink("TablerGrid"   ) { gridView  .toolbar { myToolbar }}
+        NavigationLink("TablerGrid"   ) { gridView }
     }
     
     // MARK: - List Views
@@ -188,7 +211,7 @@ struct ContentView: View {
             }
         }
     }
-    
+
     private var listMView: some View {
         SidewaysScroller(minWidth: minWidth) {
             if headerize {
@@ -207,7 +230,7 @@ struct ContentView: View {
             }
         }
     }
-    
+
     private var listBView: some View {
         SidewaysScroller(minWidth: minWidth) {
             if headerize {
@@ -222,7 +245,7 @@ struct ContentView: View {
             }
         }
     }
-    
+
     private var list1BView: some View {
         SidewaysScroller(minWidth: minWidth) {
             if headerize {
@@ -241,7 +264,7 @@ struct ContentView: View {
             }
         }
     }
-    
+
     private var listMBView: some View {
         SidewaysScroller(minWidth: minWidth) {
             if headerize {
@@ -260,9 +283,9 @@ struct ContentView: View {
             }
         }
     }
-    
+
     // MARK: - Stack Views
-    
+
     private var stackView: some View {
         SidewaysScroller(minWidth: minWidth) {
             if headerize {
@@ -277,7 +300,7 @@ struct ContentView: View {
             }
         }
     }
-    
+
     private var stack1View: some View {
         SidewaysScroller(minWidth: minWidth) {
             if headerize {
@@ -296,7 +319,7 @@ struct ContentView: View {
             }
         }
     }
-    
+
     private var stackBView: some View {
         SidewaysScroller(minWidth: minWidth) {
             if headerize {
@@ -311,7 +334,7 @@ struct ContentView: View {
             }
         }
     }
-    
+
     private var stack1BView: some View {
         SidewaysScroller(minWidth: minWidth) {
             if headerize {
@@ -330,40 +353,23 @@ struct ContentView: View {
             }
         }
     }
-    
+
     // MARK: - Stack Views
-    
+
     private var gridView: some View {
         SidewaysScroller(minWidth: minWidth) {
             if headerize {
                 TablerGrid(gridConfig,
+                           gridItems: gridItems,
                            headerContent: header,
-                           rowContent: row,
+                           rowContent: gridRow,
                            results: fruits)
             } else {
                 TablerGrid(gridConfig,
-                           rowContent: row,
+                           gridItems: gridItems,
+                           rowContent: gridRow,
                            results: fruits)
             }
-        }
-    }
-    
-    // MARK: - Action Handlers
-    
-    private var rowColorAction: TablerConfig<Fruit>.OnRowColor? {
-        colorize ? { (.primary, $0.color) } : nil
-    }
-}
-
-struct FruitToolbar: ToolbarContent {
-    @Binding var colorize: Bool
-    @Binding var headerize: Bool
-
-    //private var toolbarGroup: ToolbarItemGroup {
-    var body: some ToolbarContent {
-        ToolbarItemGroup {
-            Toggle(isOn: $colorize) { Text("Colorize") }
-            Toggle(isOn: $headerize) { Text("Header") }
         }
     }
 }
