@@ -371,11 +371,11 @@ struct ContentView: View {
             if headerize {
                 TablerGrid(gridConfig,
                            headerContent: header,
-                           rowContent: row,
+                           rowContent: gridRow,
                            results: fruits)
             } else {
                 TablerGrid(gridConfig,
-                           rowContent: row,
+                           rowContent: gridRow,
                            results: fruits)
             }
         }
