@@ -182,12 +182,12 @@ struct ContentView: View {
         SidewaysScroller(minWidth: minWidth) {
             if headerize {
                 TablerList(listConfig,
-                           headerContent: header,
-                           rowContent: row,
+                           header: header,
+                           row: row,
                            results: fruits)
             } else {
                 TablerList(listConfig,
-                           rowContent: row,
+                           row: row,
                            results: fruits)
             }
         }
@@ -197,15 +197,15 @@ struct ContentView: View {
         SidewaysScroller(minWidth: minWidth) {
             if headerize {
                 TablerList1(listConfig,
-                            headerContent: header,
-                            rowContent: row,
-                            selectContent: { SelectBorder(colorize && $0) },
+                            header: header,
+                            row: row,
+                            selectOverlay: { SelectBorder(colorize && $0) },
                             results: fruits,
                             selected: $selected)
             } else {
                 TablerList1(listConfig,
-                            rowContent: row,
-                            selectContent: { SelectBorder(colorize && $0) },
+                            row: row,
+                            selectOverlay: { SelectBorder(colorize && $0) },
                             results: fruits,
                             selected: $selected)
             }
@@ -216,15 +216,15 @@ struct ContentView: View {
         SidewaysScroller(minWidth: minWidth) {
             if headerize {
                 TablerListM(listConfig,
-                            headerContent: header,
-                            rowContent: row,
-                            selectContent: { SelectBorder(colorize && $0) },
+                            header: header,
+                            row: row,
+                            selectOverlay: { SelectBorder(colorize && $0) },
                             results: fruits,
                             selected: $mselected)
             } else {
                 TablerListM(listConfig,
-                            rowContent: row,
-                            selectContent: { SelectBorder(colorize && $0) },
+                            row: row,
+                            selectOverlay: { SelectBorder(colorize && $0) },
                             results: fruits,
                             selected: $mselected)
             }
@@ -235,12 +235,12 @@ struct ContentView: View {
         SidewaysScroller(minWidth: minWidth) {
             if headerize {
                 TablerListB(listConfig,
-                            headerContent: header,
-                            rowContent: brow,
+                            header: header,
+                            row: brow,
                             results: $fruits)
             } else {
                 TablerListB(listConfig,
-                            rowContent: brow,
+                            row: brow,
                             results: $fruits)
             }
         }
@@ -250,15 +250,15 @@ struct ContentView: View {
         SidewaysScroller(minWidth: minWidth) {
             if headerize {
                 TablerList1B(listConfig,
-                             headerContent: header,
-                             rowContent: brow,
-                             selectContent: { SelectBorder(colorize && $0) },
+                             header: header,
+                             row: brow,
+                             selectOverlay: { SelectBorder(colorize && $0) },
                              results: $fruits,
                              selected: $selected)
             } else {
                 TablerList1B(listConfig,
-                             rowContent: brow,
-                             selectContent: { SelectBorder(colorize && $0) },
+                             row: brow,
+                             selectOverlay: { SelectBorder(colorize && $0) },
                              results: $fruits,
                              selected: $selected)
             }
@@ -269,15 +269,15 @@ struct ContentView: View {
         SidewaysScroller(minWidth: minWidth) {
             if headerize {
                 TablerListMB(listConfig,
-                             headerContent: header,
-                             rowContent: brow,
-                             selectContent: { SelectBorder(colorize && $0) },
+                             header: header,
+                             row: brow,
+                             selectOverlay: { SelectBorder(colorize && $0) },
                              results: $fruits,
                              selected: $mselected)
             } else {
                 TablerListMB(listConfig,
-                             rowContent: brow,
-                             selectContent: { SelectBorder(colorize && $0) },
+                             row: brow,
+                             selectOverlay: { SelectBorder(colorize && $0) },
                              results: $fruits,
                              selected: $mselected)
             }
@@ -290,12 +290,12 @@ struct ContentView: View {
         SidewaysScroller(minWidth: minWidth) {
             if headerize {
                 TablerStack(stackConfig,
-                            headerContent: header,
-                            rowContent: row,
+                            header: header,
+                            row: row,
                             results: fruits)
             } else {
                 TablerStack(stackConfig,
-                            rowContent: row,
+                            row: row,
                             results: fruits)
             }
         }
@@ -305,15 +305,15 @@ struct ContentView: View {
         SidewaysScroller(minWidth: minWidth) {
             if headerize {
                 TablerStack1(stackConfig,
-                             headerContent: header,
-                             rowContent: row,
-                             selectContent: { SelectBorder(colorize && $0) },
+                             header: header,
+                             row: row,
+                             selectOverlay: { SelectBorder(colorize && $0) },
                              results: fruits,
                              selected: $selected)
             } else {
                 TablerStack1(stackConfig,
-                             rowContent: row,
-                             selectContent: { SelectBorder(colorize && $0) },
+                             row: row,
+                             selectOverlay: { SelectBorder(colorize && $0) },
                              results: fruits,
                              selected: $selected)
             }
@@ -324,12 +324,12 @@ struct ContentView: View {
         SidewaysScroller(minWidth: minWidth) {
             if headerize {
                 TablerStackB(stackConfig,
-                             headerContent: header,
-                             rowContent: brow,
+                             header: header,
+                             row: brow,
                              results: $fruits)
             } else {
                 TablerStackB(stackConfig,
-                             rowContent: brow,
+                             row: brow,
                              results: $fruits)
             }
         }
@@ -339,15 +339,15 @@ struct ContentView: View {
         SidewaysScroller(minWidth: minWidth) {
             if headerize {
                 TablerStack1B(stackConfig,
-                              headerContent: header,
-                              rowContent: brow,
-                              selectContent: { SelectBorder(colorize && $0) },
+                              header: header,
+                              row: brow,
+                              selectOverlay: { SelectBorder(colorize && $0) },
                               results: $fruits,
                               selected: $selected)
             } else {
                 TablerStack1B(stackConfig,
-                              rowContent: brow,
-                              selectContent: { SelectBorder(colorize && $0) },
+                              row: brow,
+                              selectOverlay: { SelectBorder(colorize && $0) },
                               results: $fruits,
                               selected: $selected)
             }
@@ -361,13 +361,13 @@ struct ContentView: View {
             if headerize {
                 TablerGrid(gridConfig,
                            gridItems: gridItems,
-                           headerContent: header,
-                           rowContent: gridRow,
+                           header: header,
+                           row: gridRow,
                            results: fruits)
             } else {
                 TablerGrid(gridConfig,
                            gridItems: gridItems,
-                           rowContent: gridRow,
+                           row: gridRow,
                            results: fruits)
             }
         }
