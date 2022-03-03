@@ -21,7 +21,6 @@ import Tabler
 
 struct ContentView: View {
     
-    private typealias Config = TablerConfig<Fruit>
     private typealias Context = TablerContext<Fruit>
     private typealias Sort = TablerSort<Fruit>
 
@@ -50,26 +49,16 @@ struct ContentView: View {
     @State private var colorize: Bool = false
     @State private var headerize: Bool = true
     
-    private func getConfig(rowSpacing: CGFloat,
-                           insets: EdgeInsets) -> Config {
-        TablerConfig(onRowColor: { (.primary, colorize ? $0.color : .clear) },
-                     rowSpacing: rowSpacing,
-                     paddingInsets: insets)
-    }
-    
-    private var listConfig: Config {
-        getConfig(rowSpacing: TablerConfigDefaults.rowSpacing,
-                  insets: TablerConfigDefaults.paddingInsets)
+    private var listConfig: TablerListConfig<Fruit> {
+        TablerListConfig<Fruit>(onRowColor: rowColorAction)
     }
 
-    private var stackConfig: Config {
-        getConfig(rowSpacing: TablerStackConfigDefaults.rowSpacing,
-                  insets: TablerStackConfigDefaults.paddingInsets)
+    private var stackConfig: TablerStackConfig<Fruit> {
+        TablerStackConfig<Fruit>(onRowColor: rowColorAction)
     }
     
-    private var gridConfig: Config {
-        getConfig(rowSpacing: TablerGridConfigDefaults.rowSpacing,
-                  insets: TablerGridConfigDefaults.paddingInsets)
+    private var gridConfig: TablerGridConfig<Fruit> {
+        TablerGridConfig<Fruit>(onRowColor: rowColorAction)
     }
     
     // MARK: - Views
@@ -371,6 +360,12 @@ struct ContentView: View {
                            results: fruits)
             }
         }
+    }
+    
+    // MARK: - Action Handlers
+    
+    private func rowColorAction(_ fruit: Fruit) -> (Color, Color) {
+        (.primary, colorize ? fruit.color : .clear)
     }
 }
 
