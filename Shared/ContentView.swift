@@ -49,16 +49,18 @@ struct ContentView: View {
     @State private var colorize: Bool = false
     @State private var headerize: Bool = true
     
+    let hoverColor: Color = .yellow.opacity(0.5)
+    
     private var listConfig: TablerListConfig<Fruit> {
-        TablerListConfig<Fruit>() //onRowColor: rowColorAction)
+        TablerListConfig<Fruit>(hoverColor: hoverColor)
     }
     
     private var stackConfig: TablerStackConfig<Fruit> {
-        TablerStackConfig<Fruit>() //onRowColor: rowColorAction)
+        TablerStackConfig<Fruit>(hoverColor: hoverColor)
     }
     
     private var gridConfig: TablerGridConfig<Fruit> {
-        TablerGridConfig<Fruit>(gridItems: gridItems) //onRowColor: rowColorAction)
+        TablerGridConfig<Fruit>(gridItems: gridItems, hoverColor: hoverColor)
     }
     
     // MARK: - Views
