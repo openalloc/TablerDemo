@@ -30,10 +30,9 @@ public struct SelectBorder: View {
     public var body: some View {
         RoundedRectangle(cornerRadius: 4, style: .continuous)
             .strokeBorder(strokeColor,
-                          lineWidth: 2,
+                          lineWidth: 1,
                           antialiased: true)
             .shadow(color: .black, radius: 2, x: 1, y: 1)
-            .padding(.horizontal, 4)
     }
 
     private var strokeColor: Color {
