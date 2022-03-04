@@ -99,7 +99,7 @@ struct ContentView: View {
         }
     }
     
-    private func header(_ ctx: Binding<Context>) -> some View {
+    private func header(ctx: Binding<Context>) -> some View {
         LazyVGrid(columns: gridItems, alignment: .leading) {
             Sort.columnTitle("ID", ctx, \.id)
                 .onTapGesture { tablerSort(ctx, &fruits, \.id) { $0.id < $1.id } }
@@ -112,7 +112,7 @@ struct ContentView: View {
     }
     
     // UNBOUND value row (read-only)
-    private func row(_ element: Fruit) -> some View {
+    private func row(element: Fruit) -> some View {
         LazyVGrid(columns: gridItems, alignment: .leading) {
             Text(element.id)
             Text(element.name).foregroundColor(colorize ? .primary : element.color)
@@ -124,7 +124,7 @@ struct ContentView: View {
     }
     
     @ViewBuilder
-    private func gridRow(_ element: Fruit) -> some View {
+    private func gridRow(element: Fruit) -> some View {
         Text(element.id)
         Text(element.name).foregroundColor(colorize ? .primary : element.color)
         Text(String(format: "%.0f g", element.weight))
@@ -134,7 +134,7 @@ struct ContentView: View {
     }
     
     // BOUND value row (with direct editing)
-    private func brow(_ element: Binding<Fruit>) -> some View {
+    private func brow(element: Binding<Fruit>) -> some View {
         LazyVGrid(columns: gridItems, alignment: .leading) {
             Text(element.wrappedValue.id)
             TextField("Name", text: element.name)
@@ -388,11 +388,11 @@ struct ContentView: View {
     
     // MARK: - Action Handlers
     
-    private func selectOverlayAction(_ isSelected: Bool) -> some View {
+    private func selectOverlayAction(isSelected: Bool) -> some View {
         SelectBorder(colorize && isSelected)
     }
     
-    private func rowBackgroundAction(_ fruit: Fruit) -> some View {
+    private func rowBackgroundAction(fruit: Fruit) -> some View {
         LinearGradient(gradient: .init(colors: [fruit.color, fruit.color.opacity(0.2)]), startPoint: .top, endPoint: .bottom)
             .opacity(colorize ? 1 : 0)
     }
