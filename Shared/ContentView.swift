@@ -108,7 +108,7 @@ struct ContentView: View {
     }
     
     // UNBOUND value row (read-only)
-    private func baseRow(_ element: Fruit) -> some View {
+    private func row(_ element: Fruit) -> some View {
         LazyVGrid(columns: gridItems, alignment: .leading) {
             Text(element.id)
             Text(element.name).foregroundColor(colorize ? .primary : element.color)
@@ -118,23 +118,7 @@ struct ContentView: View {
                 .border(colorize ? Color.primary : Color.clear)
         }
     }
-    
-    private func listRow(_ element: Fruit) -> some View {
-        baseRow(element)
-            //.listRowBackground(colorize ? element.color : .clear)
-//            .listRowBackground(myFill(element.color).opacity(colorize ? 1 : 0))
-    }
-    
-    private func stackRow(_ element: Fruit) -> some View {
-        baseRow(element)
-//            .padding(.vertical, 10)
-//            .background(myFill(element.color).opacity(colorize ? 1 : 0))
-    }
                 
-    private func myFill(_ color: Color) -> LinearGradient {
-        LinearGradient(gradient: .init(colors: [color, color.opacity(0.2)]), startPoint: .top, endPoint: .bottom)
-    }
-    
     @ViewBuilder
     private func gridRow(_ element: Fruit) -> some View {
         Text(element.id)
@@ -188,13 +172,13 @@ struct ContentView: View {
             if headerize {
                 TablerList(listConfig,
                            header: header,
-                           row: listRow,
-                           background: { myFill($0.color).opacity(colorize ? 1 : 0) },
+                           row: row,
+                           rowBackground: rowBackgroundAction,
                            results: fruits)
             } else {
                 TablerList(listConfig,
-                           row: listRow,
-                           background: { myFill($0.color).opacity(colorize ? 1 : 0) },
+                           row: row,
+                           rowBackground: rowBackgroundAction,
                            results: fruits)
             }
         }
@@ -205,14 +189,14 @@ struct ContentView: View {
             if headerize {
                 TablerList1(listConfig,
                             header: header,
-                            row: listRow,
-                            selectOverlay: { SelectBorder(colorize && $0) },
+                            row: row,
+                            selectOverlay: selectOverlayAction,
                             results: fruits,
                             selected: $selected)
             } else {
                 TablerList1(listConfig,
-                            row: listRow,
-                            selectOverlay: { SelectBorder(colorize && $0) },
+                            row: row,
+                            selectOverlay: selectOverlayAction,
                             results: fruits,
                             selected: $selected)
             }
@@ -224,14 +208,14 @@ struct ContentView: View {
             if headerize {
                 TablerListM(listConfig,
                             header: header,
-                            row: listRow,
-                            selectOverlay: { SelectBorder(colorize && $0) },
+                            row: row,
+                            selectOverlay: selectOverlayAction,
                             results: fruits,
                             selected: $mselected)
             } else {
                 TablerListM(listConfig,
-                            row: listRow,
-                            selectOverlay: { SelectBorder(colorize && $0) },
+                            row: row,
+                            selectOverlay: selectOverlayAction,
                             results: fruits,
                             selected: $mselected)
             }
@@ -259,13 +243,13 @@ struct ContentView: View {
                 TablerList1B(listConfig,
                              header: header,
                              row: brow,
-                             selectOverlay: { SelectBorder(colorize && $0) },
+                             selectOverlay: selectOverlayAction,
                              results: $fruits,
                              selected: $selected)
             } else {
                 TablerList1B(listConfig,
                              row: brow,
-                             selectOverlay: { SelectBorder(colorize && $0) },
+                             selectOverlay: selectOverlayAction,
                              results: $fruits,
                              selected: $selected)
             }
@@ -278,13 +262,13 @@ struct ContentView: View {
                 TablerListMB(listConfig,
                              header: header,
                              row: brow,
-                             selectOverlay: { SelectBorder(colorize && $0) },
+                             selectOverlay: selectOverlayAction,
                              results: $fruits,
                              selected: $mselected)
             } else {
                 TablerListMB(listConfig,
                              row: brow,
-                             selectOverlay: { SelectBorder(colorize && $0) },
+                             selectOverlay: selectOverlayAction,
                              results: $fruits,
                              selected: $mselected)
             }
@@ -298,13 +282,13 @@ struct ContentView: View {
             if headerize {
                 TablerStack(stackConfig,
                             header: header,
-                            row: stackRow,
-                            background: { myFill($0.color).opacity(colorize ? 1 : 0) },
+                            row: row,
+                            rowBackground: rowBackgroundAction,
                             results: fruits)
             } else {
                 TablerStack(stackConfig,
-                            row: stackRow,
-                            background: { myFill($0.color).opacity(colorize ? 1 : 0) },
+                            row: row,
+                            rowBackground: rowBackgroundAction,
                             results: fruits)
             }
         }
@@ -315,14 +299,14 @@ struct ContentView: View {
             if headerize {
                 TablerStack1(stackConfig,
                              header: header,
-                             row: stackRow,
-                             selectOverlay: { SelectBorder(colorize && $0) },
+                             row: row,
+                             selectOverlay: selectOverlayAction,
                              results: fruits,
                              selected: $selected)
             } else {
                 TablerStack1(stackConfig,
-                             row: stackRow,
-                             selectOverlay: { SelectBorder(colorize && $0) },
+                             row: row,
+                             selectOverlay: selectOverlayAction,
                              results: fruits,
                              selected: $selected)
             }
@@ -350,13 +334,13 @@ struct ContentView: View {
                 TablerStack1B(stackConfig,
                               header: header,
                               row: brow,
-                              selectOverlay: { SelectBorder(colorize && $0) },
+                              selectOverlay: selectOverlayAction,
                               results: $fruits,
                               selected: $selected)
             } else {
                 TablerStack1B(stackConfig,
                               row: brow,
-                              selectOverlay: { SelectBorder(colorize && $0) },
+                              selectOverlay: selectOverlayAction,
                               results: $fruits,
                               selected: $selected)
             }
@@ -384,8 +368,13 @@ struct ContentView: View {
     
     // MARK: - Action Handlers
     
-    private func rowColorAction(_ fruit: Fruit) -> (Color, Color) {
-        (.primary, colorize ? fruit.color : .clear)
+    private func selectOverlayAction(_ isSelected: Bool) -> some View {
+        SelectBorder(colorize && isSelected)
+    }
+    
+    private func rowBackgroundAction(_ fruit: Fruit) -> some View {
+        LinearGradient(gradient: .init(colors: [fruit.color, fruit.color.opacity(0.2)]), startPoint: .top, endPoint: .bottom)
+            .opacity(colorize ? 1 : 0)
     }
 }
 
