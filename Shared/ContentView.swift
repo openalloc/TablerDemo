@@ -58,7 +58,7 @@ struct ContentView: View {
     }
     
     private var gridConfig: TablerGridConfig<Fruit> {
-        TablerGridConfig<Fruit>() //onRowColor: rowColorAction)
+        TablerGridConfig<Fruit>(gridItems: gridItems) //onRowColor: rowColorAction)
     }
     
     // MARK: - Views
@@ -293,12 +293,12 @@ struct ContentView: View {
                 TablerStack(stackConfig,
                             header: header,
                             row: row,
-                           rowBackground: rowBackgroundAction,
+                            rowBackground: rowBackgroundAction,
                             results: fruits)
             } else {
                 TablerStack(stackConfig,
                             row: row,
-                           rowBackground: rowBackgroundAction,
+                            rowBackground: rowBackgroundAction,
                             results: fruits)
             }
         }
@@ -369,14 +369,12 @@ struct ContentView: View {
         SidewaysScroller(minWidth: minWidth) {
             if headerize {
                 TablerGrid(gridConfig,
-                           gridItems: gridItems,
                            header: header,
                            row: gridRow,
                            rowBackground: rowBackgroundAction,
                            results: fruits)
             } else {
                 TablerGrid(gridConfig,
-                           gridItems: gridItems,
                            row: gridRow,
                            rowBackground: rowBackgroundAction,
                            results: fruits)
