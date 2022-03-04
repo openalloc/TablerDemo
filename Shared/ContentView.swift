@@ -19,6 +19,8 @@
 import SwiftUI
 import Tabler
 
+let columnSpacing: CGFloat = 10
+
 struct ContentView: View {
     
     private typealias Context = TablerContext<Fruit>
@@ -38,10 +40,10 @@ struct ContentView: View {
     private let title = "Tabler Demo"
     
     private var gridItems: [GridItem] = [
-        GridItem(.flexible(minimum: 35, maximum: 50), alignment: .leading),
-        GridItem(.flexible(minimum: 100, maximum: 200), alignment: .leading),
-        GridItem(.flexible(minimum: 90, maximum: 100), alignment: .trailing),
-        GridItem(.flexible(minimum: 35, maximum: 50), alignment: .leading),
+        GridItem(.flexible(minimum: 35, maximum: 50), spacing: columnSpacing, alignment: .leading),
+        GridItem(.flexible(minimum: 100, maximum: 200), spacing: columnSpacing, alignment: .leading),
+        GridItem(.flexible(minimum: 40, maximum: 100), spacing: columnSpacing, alignment: .trailing),
+        GridItem(.flexible(minimum: 35, maximum: 50), spacing: columnSpacing, alignment: .leading),
     ]
     
     @State private var selected: Fruit.ID? = nil
@@ -99,15 +101,36 @@ struct ContentView: View {
         }
     }
     
+    private var columnPadding: EdgeInsets {
+        EdgeInsets(top: 0, leading: 5, bottom: 0, trailing: 5)
+    }
+    
+    private var headerBackground: some View {
+        RoundedRectangle(cornerRadius: 5)
+            .fill(
+                LinearGradient(gradient: .init(colors: [Color.gray.opacity(0.5), Color.gray.opacity(0.3)]),
+                               startPoint: .top,
+                               endPoint: .bottom)
+            )
+    }
+    
     private func header(ctx: Binding<Context>) -> some View {
         LazyVGrid(columns: gridItems, alignment: .leading) {
             Sort.columnTitle("ID", ctx, \.id)
                 .onTapGesture { tablerSort(ctx, &fruits, \.id) { $0.id < $1.id } }
+                .padding(columnPadding)
+                .background(headerBackground)
             Sort.columnTitle("Name", ctx, \.name)
                 .onTapGesture { tablerSort(ctx, &fruits, \.name) { $0.name < $1.name } }
+                .padding(columnPadding)
+                .background(headerBackground)
             Sort.columnTitle("Weight", ctx, \.weight)
                 .onTapGesture { tablerSort(ctx, &fruits, \.weight) { $0.weight < $1.weight } }
+                .padding(columnPadding)
+                .background(headerBackground)
             Text("Color")
+                .padding(columnPadding)
+                .background(headerBackground)
         }
     }
     
@@ -115,9 +138,13 @@ struct ContentView: View {
     private func row(element: Fruit) -> some View {
         LazyVGrid(columns: gridItems, alignment: .leading) {
             Text(element.id)
+                .padding(columnPadding)
             Text(element.name).foregroundColor(colorize ? .primary : element.color)
+                .padding(columnPadding)
             Text(String(format: "%.0f g", element.weight))
+                .padding(columnPadding)
             Image(systemName: "rectangle.fill")
+                .padding(columnPadding)
                 .foregroundColor(element.color)
                 .border(colorize ? Color.primary : Color.clear)
         }
@@ -126,9 +153,13 @@ struct ContentView: View {
     @ViewBuilder
     private func gridRow(element: Fruit) -> some View {
         Text(element.id)
+            .padding(columnPadding)
         Text(element.name).foregroundColor(colorize ? .primary : element.color)
+            .padding(columnPadding)
         Text(String(format: "%.0f g", element.weight))
+            .padding(columnPadding)
         Image(systemName: "rectangle.fill")
+            .padding(columnPadding)
             .foregroundColor(element.color)
             .border(colorize ? Color.primary : Color.clear)
     }
@@ -137,11 +168,15 @@ struct ContentView: View {
     private func brow(element: Binding<Fruit>) -> some View {
         LazyVGrid(columns: gridItems, alignment: .leading) {
             Text(element.wrappedValue.id)
+                .padding(columnPadding)
             TextField("Name", text: element.name)
+                .padding(columnPadding)
                 .textFieldStyle(.roundedBorder)
                 .border(Color.secondary)
             Text(String(format: "%.0f g", element.wrappedValue.weight))
+                .padding(columnPadding)
             ColorPicker("Color", selection: element.color)
+                .padding(columnPadding)
                 .labelsHidden()
         }
     }
@@ -393,7 +428,9 @@ struct ContentView: View {
     }
     
     private func rowBackgroundAction(fruit: Fruit) -> some View {
-        LinearGradient(gradient: .init(colors: [fruit.color, fruit.color.opacity(0.2)]), startPoint: .top, endPoint: .bottom)
+        LinearGradient(gradient: .init(colors: [fruit.color, fruit.color.opacity(0.2)]),
+                       startPoint: .top,
+                       endPoint: .bottom)
             .opacity(colorize ? 1 : 0)
     }
 }
