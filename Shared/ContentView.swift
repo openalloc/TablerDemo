@@ -40,10 +40,10 @@ struct ContentView: View {
     private let title = "Tabler Demo"
     
     private var gridItems: [GridItem] = [
-        GridItem(.flexible(minimum: 35, maximum: 50), spacing: columnSpacing, alignment: .leading),
+        GridItem(.flexible(minimum: 40, maximum: 60), spacing: columnSpacing, alignment: .leading),
         GridItem(.flexible(minimum: 100, maximum: 200), spacing: columnSpacing, alignment: .leading),
-        GridItem(.flexible(minimum: 40, maximum: 100), spacing: columnSpacing, alignment: .trailing),
-        GridItem(.flexible(minimum: 35, maximum: 50), spacing: columnSpacing, alignment: .leading),
+        GridItem(.flexible(minimum: 100, maximum: 140), spacing: columnSpacing, alignment: .trailing),
+        GridItem(.flexible(minimum: 35, maximum: 60), spacing: columnSpacing, alignment: .leading),
     ]
     
     @State private var selected: Fruit.ID? = nil
@@ -92,13 +92,13 @@ struct ContentView: View {
 #if os(macOS)
         .navigationTitle(title)
 #endif
-        .toolbar {
-            ToolbarItemGroup {
-                Toggle(isOn: $colorize) { Text("Colorize") }
-                Button(action: { fruits.shuffle() }) { Text("Shuffle") }
-                Toggle(isOn: $headerize) { Text("Header") }
-            }
-        }
+        //        .toolbar {
+        //            ToolbarItemGroup {
+        //                Toggle(isOn: $colorize) { Text("Colorize") }
+        //                Button(action: { fruits.shuffle() }) { Text("Shuffle") }
+        //                Toggle(isOn: $headerize) { Text("Header") }
+        //            }
+        //        }
     }
     
     private var columnPadding: EdgeInsets {
@@ -183,25 +183,30 @@ struct ContentView: View {
     
     @ViewBuilder
     var lists: some View {
-        NavigationLink("TablerList"   ) { listView }
-        NavigationLink("TablerList1"  ) { list1View    }
-        NavigationLink("TablerListM"  ) { listMView    }
-        NavigationLink("TablerListB"  ) { listBView    }
-        NavigationLink("TablerList1B" ) { list1BView    }
-        NavigationLink("TablerListMB" ) { listMBView    }
+        NavigationLink("TablerList"   ) { listView  .toolbar { myToolbar } }
+        NavigationLink("TablerList1"  ) { list1View .toolbar { myToolbar } }
+        NavigationLink("TablerListM"  ) { listMView .toolbar { myToolbar } }
+        NavigationLink("TablerListB"  ) { listBView  .toolbar { myToolbar } }
+        NavigationLink("TablerList1B" ) { list1BView .toolbar { myToolbar } }
+        NavigationLink("TablerListMB" ) { listMBView .toolbar { myToolbar } }
     }
     
     @ViewBuilder
     private var stacks: some View {
-        NavigationLink("TablerStack"  ) { stackView }
-        NavigationLink("TablerStack1" ) { stack1View }
-        NavigationLink("TablerStackB" ) { stackBView }
-        NavigationLink("TablerStack1B") { stack1BView }
+        NavigationLink("TablerStack"  ) { stackView .toolbar { myToolbar } }
+        NavigationLink("TablerStack1" ) { stack1View .toolbar { myToolbar } }
+        NavigationLink("TablerStackB" ) { stackBView .toolbar { myToolbar } }
+        NavigationLink("TablerStack1B") { stack1BView .toolbar { myToolbar } }
     }
     
     @ViewBuilder
     private var grids: some View {
-        NavigationLink("TablerGrid"   ) { gridView }
+        NavigationLink("TablerGrid"   ) { gridView .toolbar { myToolbar } }
+    }
+    
+    private var myToolbar: FruitToolbar {
+        FruitToolbar(headerize: $headerize,
+                     colorize: $colorize)
     }
     
     // MARK: - List Views

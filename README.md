@@ -6,6 +6,12 @@ _TablerDemo_ is part of the [OpenAlloc](https://github.com/openalloc) family of 
 
 macOS | iOS
 :---:|:---:
+![](https://github.com/openalloc/TablerDemo/blob/main/Images/macOSa.png)  |  ![](https://github.com/openalloc/TablerDemo/blob/main/Images/iOSa.png)
+
+With row background color:
+
+macOS | iOS
+:---:|:---:
 ![](https://github.com/openalloc/TablerDemo/blob/main/Images/macOSd.png)  |  ![](https://github.com/openalloc/TablerDemo/blob/main/Images/iOSd.png)
 
 ## Features

@@ -1,5 +1,5 @@
 //
-//  TablerDemoApp.swift
+//  FruitToolbar.swift
 //
 // Copyright 2022 FlowAllocator LLC
 //
@@ -18,14 +18,14 @@
 
 import SwiftUI
 
-@main
-struct TablerDemoApp: App {
-    var body: some Scene {
-        WindowGroup {
-            ContentView(Fruit.bootstrap)
-        }
-        .commands {
-            SidebarCommands() // adds a toggle sidebar to View menu
+struct FruitToolbar: ToolbarContent {
+    @Binding var headerize: Bool
+    @Binding var colorize: Bool
+    
+    var body: some ToolbarContent {
+        ToolbarItemGroup {
+            Toggle(isOn: $colorize) { Text("Color") }
+            Toggle(isOn: $headerize) { Text("Header") }
         }
     }
 }

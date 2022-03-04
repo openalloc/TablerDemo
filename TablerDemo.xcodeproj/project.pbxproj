@@ -17,6 +17,8 @@
 		40A103F727CA7C0800D83293 /* TablerDemoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40A103F427CA7C0800D83293 /* TablerDemoApp.swift */; };
 		40A103F827CA7C0800D83293 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40A103F527CA7C0800D83293 /* ContentView.swift */; };
 		40A103F927CA7C0800D83293 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40A103F527CA7C0800D83293 /* ContentView.swift */; };
+		40B5585C27D2C2FF00AC89D2 /* FruitToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40B5585B27D2C2FF00AC89D2 /* FruitToolbar.swift */; };
+		40B5585D27D2C30000AC89D2 /* FruitToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40B5585B27D2C2FF00AC89D2 /* FruitToolbar.swift */; };
 		40F8D4A527D05988009F7331 /* SelectBorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F8D4A327D05988009F7331 /* SelectBorder.swift */; };
 		40F8D4A627D05988009F7331 /* SelectBorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F8D4A327D05988009F7331 /* SelectBorder.swift */; };
 		40F8D4A727D05988009F7331 /* SidewaysScroller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F8D4A427D05988009F7331 /* SidewaysScroller.swift */; };
@@ -32,6 +34,7 @@
 		40A103F427CA7C0800D83293 /* TablerDemoApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TablerDemoApp.swift; sourceTree = "<group>"; };
 		40A103F527CA7C0800D83293 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		40A1043227CA801400D83293 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		40B5585B27D2C2FF00AC89D2 /* FruitToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FruitToolbar.swift; sourceTree = "<group>"; };
 		40F8D4A327D05988009F7331 /* SelectBorder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectBorder.swift; sourceTree = "<group>"; };
 		40F8D4A427D05988009F7331 /* SidewaysScroller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SidewaysScroller.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -108,6 +111,7 @@
 			children = (
 				40F8D4A327D05988009F7331 /* SelectBorder.swift */,
 				40F8D4A427D05988009F7331 /* SidewaysScroller.swift */,
+				40B5585B27D2C2FF00AC89D2 /* FruitToolbar.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -218,6 +222,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				40B5585C27D2C2FF00AC89D2 /* FruitToolbar.swift in Sources */,
 				40A103EE27CA7BA400D83293 /* Fruit.swift in Sources */,
 				40A103F627CA7C0800D83293 /* TablerDemoApp.swift in Sources */,
 				40A103F827CA7C0800D83293 /* ContentView.swift in Sources */,
@@ -230,6 +235,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				40B5585D27D2C30000AC89D2 /* FruitToolbar.swift in Sources */,
 				40A103EF27CA7BA400D83293 /* Fruit.swift in Sources */,
 				40A103F727CA7C0800D83293 /* TablerDemoApp.swift in Sources */,
 				40A103F927CA7C0800D83293 /* ContentView.swift in Sources */,
