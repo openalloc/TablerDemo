@@ -23,15 +23,15 @@ struct ContentView: View {
     
     private typealias Context = TablerContext<Fruit>
     private typealias Sort = TablerSort<Fruit>
-
+    
     // MARK: - Parameters
-
+    
     @State private var fruits: [Fruit]
-
+    
     public init(_ fruits: [Fruit]) {
         _fruits = State(initialValue: fruits)
     }
-        
+    
     // MARK: - Locals
     
     private let minWidth: CGFloat = 400
@@ -52,7 +52,7 @@ struct ContentView: View {
     private var listConfig: TablerListConfig<Fruit> {
         TablerListConfig<Fruit>() //onRowColor: rowColorAction)
     }
-
+    
     private var stackConfig: TablerStackConfig<Fruit> {
         TablerStackConfig<Fruit>() //onRowColor: rowColorAction)
     }
@@ -69,11 +69,11 @@ struct ContentView: View {
                 Section("List-based") {
                     lists
                 }
-
+                
                 Section("Stack-based") {
                     stacks
                 }
-
+                
                 Section("Grid-based") {
                     grids
                 }
@@ -118,7 +118,7 @@ struct ContentView: View {
                 .border(colorize ? Color.primary : Color.clear)
         }
     }
-                
+    
     @ViewBuilder
     private func gridRow(_ element: Fruit) -> some View {
         Text(element.id)
@@ -128,7 +128,7 @@ struct ContentView: View {
             .foregroundColor(element.color)
             .border(colorize ? Color.primary : Color.clear)
     }
-
+    
     // BOUND value row (with direct editing)
     private func brow(_ element: Binding<Fruit>) -> some View {
         LazyVGrid(columns: gridItems, alignment: .leading) {
@@ -151,7 +151,7 @@ struct ContentView: View {
         NavigationLink("TablerList1B" ) { list1BView    }
         NavigationLink("TablerListMB" ) { listMBView    }
     }
-
+    
     @ViewBuilder
     private var stacks: some View {
         NavigationLink("TablerStack"  ) { stackView }
@@ -159,7 +159,7 @@ struct ContentView: View {
         NavigationLink("TablerStackB" ) { stackBView }
         NavigationLink("TablerStack1B") { stack1BView }
     }
-
+    
     @ViewBuilder
     private var grids: some View {
         NavigationLink("TablerGrid"   ) { gridView }
@@ -190,165 +190,181 @@ struct ContentView: View {
                 TablerList1(listConfig,
                             header: header,
                             row: row,
+                            rowBackground: rowBackgroundAction,
                             selectOverlay: selectOverlayAction,
                             results: fruits,
                             selected: $selected)
             } else {
                 TablerList1(listConfig,
                             row: row,
+                            rowBackground: rowBackgroundAction,
                             selectOverlay: selectOverlayAction,
                             results: fruits,
                             selected: $selected)
             }
         }
     }
-
+    
     private var listMView: some View {
         SidewaysScroller(minWidth: minWidth) {
             if headerize {
                 TablerListM(listConfig,
                             header: header,
                             row: row,
+                            rowBackground: rowBackgroundAction,
                             selectOverlay: selectOverlayAction,
                             results: fruits,
                             selected: $mselected)
             } else {
                 TablerListM(listConfig,
                             row: row,
+                            rowBackground: rowBackgroundAction,
                             selectOverlay: selectOverlayAction,
                             results: fruits,
                             selected: $mselected)
             }
         }
     }
-
+    
     private var listBView: some View {
         SidewaysScroller(minWidth: minWidth) {
             if headerize {
                 TablerListB(listConfig,
                             header: header,
                             row: brow,
+                            rowBackground: rowBackgroundAction,
                             results: $fruits)
             } else {
                 TablerListB(listConfig,
                             row: brow,
+                            rowBackground: rowBackgroundAction,
                             results: $fruits)
             }
         }
     }
-
+    
     private var list1BView: some View {
         SidewaysScroller(minWidth: minWidth) {
             if headerize {
                 TablerList1B(listConfig,
                              header: header,
                              row: brow,
+                             rowBackground: rowBackgroundAction,
                              selectOverlay: selectOverlayAction,
                              results: $fruits,
                              selected: $selected)
             } else {
                 TablerList1B(listConfig,
                              row: brow,
+                             rowBackground: rowBackgroundAction,
                              selectOverlay: selectOverlayAction,
                              results: $fruits,
                              selected: $selected)
             }
         }
     }
-
+    
     private var listMBView: some View {
         SidewaysScroller(minWidth: minWidth) {
             if headerize {
                 TablerListMB(listConfig,
                              header: header,
                              row: brow,
+                             rowBackground: rowBackgroundAction,
                              selectOverlay: selectOverlayAction,
                              results: $fruits,
                              selected: $mselected)
             } else {
                 TablerListMB(listConfig,
                              row: brow,
+                             rowBackground: rowBackgroundAction,
                              selectOverlay: selectOverlayAction,
                              results: $fruits,
                              selected: $mselected)
             }
         }
     }
-
+    
     // MARK: - Stack Views
-
+    
     private var stackView: some View {
         SidewaysScroller(minWidth: minWidth) {
             if headerize {
                 TablerStack(stackConfig,
                             header: header,
                             row: row,
-                            rowBackground: rowBackgroundAction,
+                           rowBackground: rowBackgroundAction,
                             results: fruits)
             } else {
                 TablerStack(stackConfig,
                             row: row,
-                            rowBackground: rowBackgroundAction,
+                           rowBackground: rowBackgroundAction,
                             results: fruits)
             }
         }
     }
-
+    
     private var stack1View: some View {
         SidewaysScroller(minWidth: minWidth) {
             if headerize {
                 TablerStack1(stackConfig,
                              header: header,
                              row: row,
+                             rowBackground: rowBackgroundAction,
                              selectOverlay: selectOverlayAction,
                              results: fruits,
                              selected: $selected)
             } else {
                 TablerStack1(stackConfig,
                              row: row,
+                             rowBackground: rowBackgroundAction,
                              selectOverlay: selectOverlayAction,
                              results: fruits,
                              selected: $selected)
             }
         }
     }
-
+    
     private var stackBView: some View {
         SidewaysScroller(minWidth: minWidth) {
             if headerize {
                 TablerStackB(stackConfig,
                              header: header,
                              row: brow,
+                             rowBackground: rowBackgroundAction,
                              results: $fruits)
             } else {
                 TablerStackB(stackConfig,
                              row: brow,
+                             rowBackground: rowBackgroundAction,
                              results: $fruits)
             }
         }
     }
-
+    
     private var stack1BView: some View {
         SidewaysScroller(minWidth: minWidth) {
             if headerize {
                 TablerStack1B(stackConfig,
                               header: header,
                               row: brow,
+                              rowBackground: rowBackgroundAction,
                               selectOverlay: selectOverlayAction,
                               results: $fruits,
                               selected: $selected)
             } else {
                 TablerStack1B(stackConfig,
                               row: brow,
+                              rowBackground: rowBackgroundAction,
                               selectOverlay: selectOverlayAction,
                               results: $fruits,
                               selected: $selected)
             }
         }
     }
-
+    
     // MARK: - Stack Views
-
+    
     private var gridView: some View {
         SidewaysScroller(minWidth: minWidth) {
             if headerize {
@@ -356,11 +372,13 @@ struct ContentView: View {
                            gridItems: gridItems,
                            header: header,
                            row: gridRow,
+                           rowBackground: rowBackgroundAction,
                            results: fruits)
             } else {
                 TablerGrid(gridConfig,
                            gridItems: gridItems,
                            row: gridRow,
+                           rowBackground: rowBackgroundAction,
                            results: fruits)
             }
         }
