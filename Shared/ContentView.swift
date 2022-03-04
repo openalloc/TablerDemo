@@ -49,7 +49,9 @@ struct ContentView: View {
     @State private var colorize: Bool = false
     @State private var headerize: Bool = true
     
-    let hoverColor: Color = .yellow.opacity(0.5)
+    private var hoverColor: Color {
+        colorize ? .clear : .orange.opacity(0.3)
+    }
     
     private var listConfig: TablerListConfig<Fruit> {
         TablerListConfig<Fruit>(hoverColor: hoverColor)
