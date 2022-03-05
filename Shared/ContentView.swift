@@ -190,8 +190,11 @@ struct ContentView: View {
     @ViewBuilder
     private var grids: some View {
         NavigationLink("TablerGrid"   ) { gridView .toolbar { myToolbar } }
-        NavigationLink("TablerGridB"  ) { gridBView .toolbar { myToolbar } }    }
-    
+        NavigationLink("TablerGrid1"   ) { grid1View .toolbar { myToolbar } }
+        NavigationLink("TablerGridB"  ) { gridBView .toolbar { myToolbar } }
+        NavigationLink("TablerGrid1B"  ) { grid1BView .toolbar { myToolbar } }
+    }
+
     private var myToolbar: FruitToolbar {
         FruitToolbar(headerize: $headerize,
                      colorize: $colorize)
@@ -223,14 +226,14 @@ struct ContentView: View {
                             header: header,
                             row: row,
                             rowBackground: rowBackgroundAction,
-                            selectOverlay: selectOverlayAction,
+                            selectOverlay: listSelectOverlayAction,
                             results: fruits,
                             selected: $selected)
             } else {
                 TablerList1(listConfig,
                             row: row,
                             rowBackground: rowBackgroundAction,
-                            selectOverlay: selectOverlayAction,
+                            selectOverlay: listSelectOverlayAction,
                             results: fruits,
                             selected: $selected)
             }
@@ -244,14 +247,14 @@ struct ContentView: View {
                             header: header,
                             row: row,
                             rowBackground: rowBackgroundAction,
-                            selectOverlay: selectOverlayAction,
+                            selectOverlay: listSelectOverlayAction,
                             results: fruits,
                             selected: $mselected)
             } else {
                 TablerListM(listConfig,
                             row: row,
                             rowBackground: rowBackgroundAction,
-                            selectOverlay: selectOverlayAction,
+                            selectOverlay: listSelectOverlayAction,
                             results: fruits,
                             selected: $mselected)
             }
@@ -282,14 +285,14 @@ struct ContentView: View {
                              header: header,
                              row: brow,
                              rowBackground: rowBackgroundAction,
-                             selectOverlay: selectOverlayAction,
+                             selectOverlay: listSelectOverlayAction,
                              results: $fruits,
                              selected: $selected)
             } else {
                 TablerList1B(listConfig,
                              row: brow,
                              rowBackground: rowBackgroundAction,
-                             selectOverlay: selectOverlayAction,
+                             selectOverlay: listSelectOverlayAction,
                              results: $fruits,
                              selected: $selected)
             }
@@ -303,14 +306,14 @@ struct ContentView: View {
                              header: header,
                              row: brow,
                              rowBackground: rowBackgroundAction,
-                             selectOverlay: selectOverlayAction,
+                             selectOverlay: listSelectOverlayAction,
                              results: $fruits,
                              selected: $mselected)
             } else {
                 TablerListMB(listConfig,
                              row: brow,
                              rowBackground: rowBackgroundAction,
-                             selectOverlay: selectOverlayAction,
+                             selectOverlay: listSelectOverlayAction,
                              results: $fruits,
                              selected: $mselected)
             }
@@ -343,14 +346,14 @@ struct ContentView: View {
                              header: header,
                              row: row,
                              rowBackground: rowBackgroundAction,
-                             selectOverlay: selectOverlayAction,
+                             selectOverlay: selectOverlay,
                              results: fruits,
                              selected: $selected)
             } else {
                 TablerStack1(stackConfig,
                              row: row,
                              rowBackground: rowBackgroundAction,
-                             selectOverlay: selectOverlayAction,
+                             selectOverlay: selectOverlay,
                              results: fruits,
                              selected: $selected)
             }
@@ -381,14 +384,14 @@ struct ContentView: View {
                               header: header,
                               row: brow,
                               rowBackground: rowBackgroundAction,
-                              selectOverlay: selectOverlayAction,
+                              selectOverlay: selectOverlay,
                               results: $fruits,
                               selected: $selected)
             } else {
                 TablerStack1B(stackConfig,
                               row: brow,
                               rowBackground: rowBackgroundAction,
-                              selectOverlay: selectOverlayAction,
+                              selectOverlay: selectOverlay,
                               results: $fruits,
                               selected: $selected)
             }
@@ -403,12 +406,10 @@ struct ContentView: View {
                 TablerGrid(gridConfig,
                            header: header,
                            row: rowItems,
-                           rowBackground: rowBackgroundAction,
                            results: fruits)
             } else {
                 TablerGrid(gridConfig,
                            row: rowItems,
-                           rowBackground: rowBackgroundAction,
                            results: fruits)
             }
         }
@@ -420,23 +421,69 @@ struct ContentView: View {
                 TablerGridB(gridConfig,
                             header: header,
                             row: rowItemsBound,
-                            rowBackground: rowBackgroundAction,
                             results: $fruits)
             } else {
                 TablerGridB(gridConfig,
                             row: rowItemsBound,
-                            rowBackground: rowBackgroundAction,
                             results: $fruits)
             }
         }
     }
     
-    // MARK: - Action Handlers
-    
-    private func selectOverlayAction(isSelected: Bool) -> some View {
-        SelectBorder(colorize && isSelected)
+    private var grid1View: some View {
+        SidewaysScroller(minWidth: minWidth) {
+            if headerize {
+                TablerGrid1(gridConfig,
+                             header: header,
+                             row: rowItems,
+                             rowBackground: selectRowBackgroundAction,
+                             results: fruits,
+                             selected: $selected)
+            } else {
+                TablerGrid1(gridConfig,
+                             row: rowItems,
+                             rowBackground: selectRowBackgroundAction,
+                             results: fruits,
+                             selected: $selected)
+            }
+        }
     }
     
+    private var grid1BView: some View {
+        SidewaysScroller(minWidth: minWidth) {
+            if headerize {
+                TablerGrid1B(gridConfig,
+                            header: header,
+                            row: rowItemsBound,
+                            rowBackground: selectRowBackgroundAction,
+                            results: $fruits,
+                             selected: $selected)
+            } else {
+                TablerGrid1B(gridConfig,
+                            row: rowItemsBound,
+                            rowBackground: selectRowBackgroundAction,
+                            results: $fruits,
+                             selected: $selected)
+            }
+        }
+    }
+    
+    private func selectRowBackgroundAction(fruit: Fruit) -> some View {
+        RoundedRectangle(cornerRadius: 5)
+            .fill(fruit.id == selected ? Color.accentColor : Color.clear)
+    }
+    
+    private func selectOverlay(_ selected: Bool) -> some View {
+        RoundedRectangle(cornerRadius: 5)
+            .strokeBorder(selected ? .white : .clear,
+                          lineWidth: 2,
+                          antialiased: true)
+    }
+    
+    private func listSelectOverlayAction(isSelected: Bool) -> some View {
+        selectOverlay(colorize && isSelected)
+    }
+
     private func rowBackgroundAction(fruit: Fruit) -> some View {
         LinearGradient(gradient: .init(colors: [fruit.color, fruit.color.opacity(0.2)]),
                        startPoint: .top,
