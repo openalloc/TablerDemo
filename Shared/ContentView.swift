@@ -19,8 +19,6 @@
 import SwiftUI
 import Tabler
 
-let columnSpacing: CGFloat = 10
-
 struct ContentView: View {
     
     private typealias Context = TablerContext<Fruit>
@@ -36,15 +34,16 @@ struct ContentView: View {
     
     // MARK: - Locals
     
+    private let columnSpacing: CGFloat = 10
     private let minWidth: CGFloat = 400
     private let title = "Tabler Demo"
     
-    private var gridItems: [GridItem] = [
+    private var gridItems: [GridItem] {[
         GridItem(.flexible(minimum: 40, maximum: 60), spacing: columnSpacing, alignment: .leading),
         GridItem(.flexible(minimum: 100, maximum: 200), spacing: columnSpacing, alignment: .leading),
         GridItem(.flexible(minimum: 100, maximum: 140), spacing: columnSpacing, alignment: .trailing),
         GridItem(.flexible(minimum: 35, maximum: 60), spacing: columnSpacing, alignment: .leading),
-    ]
+    ]}
     
     @State private var selected: Fruit.ID? = nil
     @State private var mselected = Set<Fruit.ID>()
@@ -92,13 +91,6 @@ struct ContentView: View {
 #if os(macOS)
         .navigationTitle(title)
 #endif
-        //        .toolbar {
-        //            ToolbarItemGroup {
-        //                Toggle(isOn: $colorize) { Text("Colorize") }
-        //                Button(action: { fruits.shuffle() }) { Text("Shuffle") }
-        //                Toggle(isOn: $headerize) { Text("Header") }
-        //            }
-        //        }
     }
     
     private var columnPadding: EdgeInsets {
@@ -137,21 +129,12 @@ struct ContentView: View {
     // UNBOUND value row (read-only)
     private func row(element: Fruit) -> some View {
         LazyVGrid(columns: gridItems, alignment: .leading) {
-            Text(element.id)
-                .padding(columnPadding)
-            Text(element.name).foregroundColor(colorize ? .primary : element.color)
-                .padding(columnPadding)
-            Text(String(format: "%.0f g", element.weight))
-                .padding(columnPadding)
-            Image(systemName: "rectangle.fill")
-                .padding(columnPadding)
-                .foregroundColor(element.color)
-                .border(colorize ? Color.primary : Color.clear)
+            rowItems(element: element)
         }
     }
     
     @ViewBuilder
-    private func gridRow(element: Fruit) -> some View {
+    private func rowItems(element: Fruit) -> some View {
         Text(element.id)
             .padding(columnPadding)
         Text(element.name).foregroundColor(colorize ? .primary : element.color)
@@ -167,18 +150,23 @@ struct ContentView: View {
     // BOUND value row (with direct editing)
     private func brow(element: Binding<Fruit>) -> some View {
         LazyVGrid(columns: gridItems, alignment: .leading) {
-            Text(element.wrappedValue.id)
-                .padding(columnPadding)
-            TextField("Name", text: element.name)
-                .padding(columnPadding)
-                .textFieldStyle(.roundedBorder)
-                .border(Color.secondary)
-            Text(String(format: "%.0f g", element.wrappedValue.weight))
-                .padding(columnPadding)
-            ColorPicker("Color", selection: element.color)
-                .padding(columnPadding)
-                .labelsHidden()
+            rowItemsBound(element: element)
         }
+    }
+    
+    @ViewBuilder
+    private func rowItemsBound(element: Binding<Fruit>) -> some View {
+        Text(element.wrappedValue.id)
+            .padding(columnPadding)
+        TextField("Name", text: element.name)
+            .padding(columnPadding)
+            .textFieldStyle(.roundedBorder)
+            .border(Color.secondary)
+        Text(String(format: "%.0f g", element.wrappedValue.weight))
+            .padding(columnPadding)
+        ColorPicker("Color", selection: element.color)
+            .padding(columnPadding)
+            .labelsHidden()
     }
     
     @ViewBuilder
@@ -202,7 +190,7 @@ struct ContentView: View {
     @ViewBuilder
     private var grids: some View {
         NavigationLink("TablerGrid"   ) { gridView .toolbar { myToolbar } }
-    }
+        NavigationLink("TablerGridB"  ) { gridBView .toolbar { myToolbar } }    }
     
     private var myToolbar: FruitToolbar {
         FruitToolbar(headerize: $headerize,
@@ -407,21 +395,38 @@ struct ContentView: View {
         }
     }
     
-    // MARK: - Stack Views
+    // MARK: - Grid Views
     
     private var gridView: some View {
         SidewaysScroller(minWidth: minWidth) {
             if headerize {
                 TablerGrid(gridConfig,
                            header: header,
-                           row: gridRow,
+                           row: rowItems,
                            rowBackground: rowBackgroundAction,
                            results: fruits)
             } else {
                 TablerGrid(gridConfig,
-                           row: gridRow,
+                           row: rowItems,
                            rowBackground: rowBackgroundAction,
                            results: fruits)
+            }
+        }
+    }
+    
+    private var gridBView: some View {
+        SidewaysScroller(minWidth: minWidth) {
+            if headerize {
+                TablerGridB(gridConfig,
+                            header: header,
+                            row: rowItemsBound,
+                            rowBackground: rowBackgroundAction,
+                            results: $fruits)
+            } else {
+                TablerGridB(gridConfig,
+                            row: rowItemsBound,
+                            rowBackground: rowBackgroundAction,
+                            results: $fruits)
             }
         }
     }
