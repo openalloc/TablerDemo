@@ -55,7 +55,8 @@ struct ContentView: View {
     }
     
     private var listConfig: TablerListConfig<Fruit> {
-        TablerListConfig<Fruit>(hoverColor: hoverColor)
+        TablerListConfig<Fruit>(onMove: moveAction,
+                                hoverColor: hoverColor)
     }
     
     private var stackConfig: TablerStackConfig<Fruit> {
@@ -194,7 +195,7 @@ struct ContentView: View {
         NavigationLink("TablerGridB"  ) { gridBView .toolbar { myToolbar } }
         NavigationLink("TablerGrid1B"  ) { grid1BView .toolbar { myToolbar } }
     }
-
+    
     private var myToolbar: FruitToolbar {
         FruitToolbar(headerize: $headerize,
                      colorize: $colorize)
@@ -434,17 +435,17 @@ struct ContentView: View {
         SidewaysScroller(minWidth: minWidth) {
             if headerize {
                 TablerGrid1(gridConfig,
-                             header: header,
-                             row: rowItems,
-                             rowBackground: selectRowBackgroundAction,
-                             results: fruits,
-                             selected: $selected)
+                            header: header,
+                            row: rowItems,
+                            rowBackground: selectRowBackgroundAction,
+                            results: fruits,
+                            selected: $selected)
             } else {
                 TablerGrid1(gridConfig,
-                             row: rowItems,
-                             rowBackground: selectRowBackgroundAction,
-                             results: fruits,
-                             selected: $selected)
+                            row: rowItems,
+                            rowBackground: selectRowBackgroundAction,
+                            results: fruits,
+                            selected: $selected)
             }
         }
     }
@@ -453,16 +454,16 @@ struct ContentView: View {
         SidewaysScroller(minWidth: minWidth) {
             if headerize {
                 TablerGrid1B(gridConfig,
-                            header: header,
-                            row: rowItemsBound,
-                            rowBackground: selectRowBackgroundAction,
-                            results: $fruits,
+                             header: header,
+                             row: rowItemsBound,
+                             rowBackground: selectRowBackgroundAction,
+                             results: $fruits,
                              selected: $selected)
             } else {
                 TablerGrid1B(gridConfig,
-                            row: rowItemsBound,
-                            rowBackground: selectRowBackgroundAction,
-                            results: $fruits,
+                             row: rowItemsBound,
+                             rowBackground: selectRowBackgroundAction,
+                             results: $fruits,
                              selected: $selected)
             }
         }
@@ -483,12 +484,16 @@ struct ContentView: View {
                           lineWidth: 2,
                           antialiased: true)
     }
-
+    
     private func rowBackgroundAction(fruit: Fruit) -> some View {
         LinearGradient(gradient: .init(colors: [fruit.color, fruit.color.opacity(0.2)]),
                        startPoint: .top,
                        endPoint: .bottom)
             .opacity(colorize ? 1 : 0)
+    }
+    
+    private func moveAction(from source: IndexSet, to destination: Int) {
+        fruits.move(fromOffsets: source, toOffset: destination)
     }
 }
 
