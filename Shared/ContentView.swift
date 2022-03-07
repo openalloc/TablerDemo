@@ -49,23 +49,23 @@ struct ContentView: View {
     @State private var mselected = Set<Fruit.ID>()
     @State private var colorize: Bool = false
     @State private var headerize: Bool = true
+    @State private var hovered: Fruit.ID? = nil
     
     private var hoverColor: Color {
         colorize ? .clear : .orange.opacity(0.3)
     }
     
     private var listConfig: TablerListConfig<Fruit> {
-        TablerListConfig<Fruit>(onMove: moveAction,
-                                //filter: { $0.weight > 10 },
-                                hoverColor: hoverColor)
+        TablerListConfig<Fruit>(onMove: moveAction, onHover: hoverAction)
+        //filter: { $0.weight > 10 }
     }
     
     private var stackConfig: TablerStackConfig<Fruit> {
-        TablerStackConfig<Fruit>(hoverColor: hoverColor)
+        TablerStackConfig<Fruit>(onHover: hoverAction)
     }
     
     private var gridConfig: TablerGridConfig<Fruit> {
-        TablerGridConfig<Fruit>(gridItems: gridItems, hoverColor: hoverColor)
+        TablerGridConfig<Fruit>(gridItems: gridItems, onHover: hoverAction)
     }
     
     // MARK: - Views
@@ -206,7 +206,43 @@ struct ContentView: View {
                      colorize: $colorize)
     }
     
-
+    private func singleSelectBack(fruit: Fruit) -> some View {
+        RoundedRectangle(cornerRadius: 5)
+            .fill(Color.accentColor.opacity(selected == fruit.id ? 1 : (hovered == fruit.id ? 0.2 : 0.0)))
+    }
+    
+    private func singleSelectOver(fruit: Fruit) -> some View {
+        RoundedRectangle(cornerRadius: 5)
+            .strokeBorder(selected == fruit.id ? .white : .clear,
+                          lineWidth: 2,
+                          antialiased: true)
+    }
+    
+    private func multiSelectBack(fruit: Fruit) -> some View {
+        RoundedRectangle(cornerRadius: 5)
+            .fill(Color.accentColor.opacity(mselected.contains(fruit.id) ? 1 : (hovered == fruit.id ? 0.2 : 0.0)))
+    }
+    
+    private func multiSelectOver(fruit: Fruit) -> some View {
+        RoundedRectangle(cornerRadius: 5)
+            .strokeBorder(mselected.contains(fruit.id) ? .white : .clear,
+                          lineWidth: 2,
+                          antialiased: true)
+    }
+    
+    private func rowBackground(fruit: Fruit) -> some View {
+        LinearGradient(gradient: .init(colors: [fruit.color, fruit.color.opacity(0.5)]),
+                       startPoint: .top,
+                       endPoint: .bottom)
+            .opacity(colorize ? 1.0 : (hovered == fruit.id ? 0.2 : 0.0))
+    }
+    
+    // MARK: - Action Handlers
+    
+    private func hoverAction(fruit: Fruit, isHovered: Bool) {
+        if isHovered { hovered = fruit.id } else { hovered = nil }
+    }
+    
     private func moveAction(from source: IndexSet, to destination: Int) {
         fruits.move(fromOffsets: source, toOffset: destination)
     }
@@ -221,12 +257,12 @@ extension ContentView {
                 TablerList(listConfig,
                            header: header,
                            row: row,
-                           rowBackground: rowBackgroundAction,
+                           rowBackground: rowBackground,
                            results: fruits)
             } else {
                 TablerList(listConfig,
                            row: row,
-                           rowBackground: rowBackgroundAction,
+                           rowBackground: rowBackground,
                            results: fruits)
             }
         }
@@ -238,14 +274,14 @@ extension ContentView {
                 TablerList1(listConfig,
                             header: header,
                             row: row,
-                            rowBackground: rowBackgroundAction,
+                            rowBackground: rowBackground,
                             rowOverlay: singleSelectOver,
                             results: fruits,
                             selected: $selected)
             } else {
                 TablerList1(listConfig,
                             row: row,
-                            rowBackground: rowBackgroundAction,
+                            rowBackground: rowBackground,
                             rowOverlay: singleSelectOver,
                             results: fruits,
                             selected: $selected)
@@ -259,14 +295,14 @@ extension ContentView {
                 TablerListM(listConfig,
                             header: header,
                             row: row,
-                            rowBackground: rowBackgroundAction,
+                            rowBackground: rowBackground,
                             rowOverlay: multiSelectOver,
                             results: fruits,
                             selected: $mselected)
             } else {
                 TablerListM(listConfig,
                             row: row,
-                            rowBackground: rowBackgroundAction,
+                            rowBackground: rowBackground,
                             rowOverlay: multiSelectOver,
                             results: fruits,
                             selected: $mselected)
@@ -280,12 +316,12 @@ extension ContentView {
                 TablerListB(listConfig,
                             header: header,
                             row: brow,
-                            rowBackground: rowBackgroundAction,
+                            rowBackground: rowBackground,
                             results: $fruits)
             } else {
                 TablerListB(listConfig,
                             row: brow,
-                            rowBackground: rowBackgroundAction,
+                            rowBackground: rowBackground,
                             results: $fruits)
             }
         }
@@ -297,14 +333,14 @@ extension ContentView {
                 TablerList1B(listConfig,
                              header: header,
                              row: brow,
-                             rowBackground: rowBackgroundAction,
+                             rowBackground: rowBackground,
                              rowOverlay: singleSelectOver,
                              results: $fruits,
                              selected: $selected)
             } else {
                 TablerList1B(listConfig,
                              row: brow,
-                             rowBackground: rowBackgroundAction,
+                             rowBackground: rowBackground,
                              rowOverlay: singleSelectOver,
                              results: $fruits,
                              selected: $selected)
@@ -318,14 +354,14 @@ extension ContentView {
                 TablerListMB(listConfig,
                              header: header,
                              row: brow,
-                             rowBackground: rowBackgroundAction,
+                             rowBackground: rowBackground,
                              rowOverlay: multiSelectOver,
                              results: $fruits,
                              selected: $mselected)
             } else {
                 TablerListMB(listConfig,
                              row: brow,
-                             rowBackground: rowBackgroundAction,
+                             rowBackground: rowBackground,
                              rowOverlay: multiSelectOver,
                              results: $fruits,
                              selected: $mselected)
@@ -341,12 +377,12 @@ extension ContentView {
                 TablerStack(stackConfig,
                             header: header,
                             row: row,
-                            rowBackground: rowBackgroundAction,
+                            rowBackground: rowBackground,
                             results: fruits)
             } else {
                 TablerStack(stackConfig,
                             row: row,
-                            rowBackground: rowBackgroundAction,
+                            rowBackground: rowBackground,
                             results: fruits)
             }
         }
@@ -358,14 +394,14 @@ extension ContentView {
                 TablerStack1(stackConfig,
                              header: header,
                              row: row,
-                             rowBackground: rowBackgroundAction,
+                             rowBackground: rowBackground,
                              rowOverlay: singleSelectOver,
                              results: fruits,
                              selected: $selected)
             } else {
                 TablerStack1(stackConfig,
                              row: row,
-                             rowBackground: rowBackgroundAction,
+                             rowBackground: rowBackground,
                              rowOverlay: singleSelectOver,
                              results: fruits,
                              selected: $selected)
@@ -379,12 +415,12 @@ extension ContentView {
                 TablerStackB(stackConfig,
                              header: header,
                              row: brow,
-                             rowBackground: rowBackgroundAction,
+                             rowBackground: rowBackground,
                              results: $fruits)
             } else {
                 TablerStackB(stackConfig,
                              row: brow,
-                             rowBackground: rowBackgroundAction,
+                             rowBackground: rowBackground,
                              results: $fruits)
             }
         }
@@ -396,14 +432,14 @@ extension ContentView {
                 TablerStack1B(stackConfig,
                               header: header,
                               row: brow,
-                              rowBackground: rowBackgroundAction,
+                              rowBackground: rowBackground,
                               rowOverlay: singleSelectOver,
                               results: $fruits,
                               selected: $selected)
             } else {
                 TablerStack1B(stackConfig,
                               row: brow,
-                              rowBackground: rowBackgroundAction,
+                              rowBackground: rowBackground,
                               rowOverlay: singleSelectOver,
                               results: $fruits,
                               selected: $selected)
@@ -417,14 +453,14 @@ extension ContentView {
                 TablerStackM(stackConfig,
                              header: header,
                              row: row,
-                             rowBackground: rowBackgroundAction,
+                             rowBackground: rowBackground,
                              rowOverlay: multiSelectOver,
                              results: fruits,
                              selected: $mselected)
             } else {
                 TablerStackM(stackConfig,
                              row: row,
-                             rowBackground: rowBackgroundAction,
+                             rowBackground: rowBackground,
                              rowOverlay: multiSelectOver,
                              results: fruits,
                              selected: $mselected)
@@ -438,14 +474,14 @@ extension ContentView {
                 TablerStackMB(stackConfig,
                               header: header,
                               row: brow,
-                              rowBackground: rowBackgroundAction,
+                              rowBackground: rowBackground,
                               rowOverlay: multiSelectOver,
                               results: $fruits,
                               selected: $mselected)
             } else {
                 TablerStackMB(stackConfig,
                               row: brow,
-                              rowBackground: rowBackgroundAction,
+                              rowBackground: rowBackground,
                               rowOverlay: multiSelectOver,
                               results: $fruits,
                               selected: $mselected)
@@ -461,10 +497,12 @@ extension ContentView {
                 TablerGrid(gridConfig,
                            header: header,
                            row: rowItems,
+                           rowBackground: rowBackground,
                            results: fruits)
             } else {
                 TablerGrid(gridConfig,
                            row: rowItems,
+                           rowBackground: rowBackground,
                            results: fruits)
             }
         }
@@ -476,10 +514,12 @@ extension ContentView {
                 TablerGridB(gridConfig,
                             header: header,
                             row: rowItemsBound,
+                            rowBackground: rowBackground,
                             results: $fruits)
             } else {
                 TablerGridB(gridConfig,
                             row: rowItemsBound,
+                            rowBackground: rowBackground,
                             results: $fruits)
             }
         }
@@ -560,39 +600,6 @@ extension ContentView {
             }
         }
     }
-    
-    private func singleSelectBack(fruit: Fruit) -> some View {
-        RoundedRectangle(cornerRadius: 5)
-            .fill(selected == fruit.id ? Color.accentColor : Color.clear)
-    }
-    
-    private func singleSelectOver(fruit: Fruit) -> some View {
-        RoundedRectangle(cornerRadius: 5)
-            .strokeBorder(selected == fruit.id ? .white : .clear,
-                          lineWidth: 2,
-                          antialiased: true)
-    }
-    
-    private func multiSelectBack(fruit: Fruit) -> some View {
-        RoundedRectangle(cornerRadius: 5)
-            .fill(mselected.contains(fruit.id) ? Color.accentColor : Color.clear)
-    }
-    
-    private func multiSelectOver(fruit: Fruit) -> some View {
-        RoundedRectangle(cornerRadius: 5)
-            .strokeBorder(mselected.contains(fruit.id) ? .white : .clear,
-                          lineWidth: 2,
-                          antialiased: true)
-    }
-
-    
-    private func rowBackgroundAction(fruit: Fruit) -> some View {
-        LinearGradient(gradient: .init(colors: [fruit.color, fruit.color.opacity(0.2)]),
-                       startPoint: .top,
-                       endPoint: .bottom)
-            .opacity(colorize ? 1 : 0)
-    }
-    
 }
 
 struct ContentView_Previews: PreviewProvider {
