@@ -239,8 +239,8 @@ struct ContentView: View {
     
     // MARK: - Action Handlers
     
-    private func hoverAction(fruit: Fruit, isHovered: Bool) {
-        if isHovered { hovered = fruit.id } else { hovered = nil }
+    private func hoverAction(fruitID: Fruit.ID, isHovered: Bool) {
+        if isHovered { hovered = fruitID } else { hovered = nil }
     }
     
     private func moveAction(from source: IndexSet, to destination: Int) {
