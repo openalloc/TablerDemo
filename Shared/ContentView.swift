@@ -56,6 +56,7 @@ struct ContentView: View {
     
     private var listConfig: TablerListConfig<Fruit> {
         TablerListConfig<Fruit>(onMove: moveAction,
+                                //filter: { $0.weight > 10 },
                                 hoverColor: hoverColor)
     }
     
@@ -173,27 +174,31 @@ struct ContentView: View {
     @ViewBuilder
     var lists: some View {
         NavigationLink("TablerList"   ) { listView  .toolbar { myToolbar } }
-        NavigationLink("TablerList1"  ) { list1View .toolbar { myToolbar } }
-        NavigationLink("TablerListM"  ) { listMView .toolbar { myToolbar } }
         NavigationLink("TablerListB"  ) { listBView  .toolbar { myToolbar } }
+        NavigationLink("TablerList1"  ) { list1View .toolbar { myToolbar } }
         NavigationLink("TablerList1B" ) { list1BView .toolbar { myToolbar } }
+        NavigationLink("TablerListM"  ) { listMView .toolbar { myToolbar } }
         NavigationLink("TablerListMB" ) { listMBView .toolbar { myToolbar } }
     }
     
     @ViewBuilder
     private var stacks: some View {
         NavigationLink("TablerStack"  ) { stackView .toolbar { myToolbar } }
-        NavigationLink("TablerStack1" ) { stack1View .toolbar { myToolbar } }
         NavigationLink("TablerStackB" ) { stackBView .toolbar { myToolbar } }
+        NavigationLink("TablerStack1" ) { stack1View .toolbar { myToolbar } }
         NavigationLink("TablerStack1B") { stack1BView .toolbar { myToolbar } }
+        NavigationLink("TablerStackM" ) { stackMView .toolbar { myToolbar } }
+        NavigationLink("TablerStackMB" ) { stackMBView .toolbar { myToolbar } }
     }
     
     @ViewBuilder
     private var grids: some View {
         NavigationLink("TablerGrid"   ) { gridView .toolbar { myToolbar } }
-        NavigationLink("TablerGrid1"   ) { grid1View .toolbar { myToolbar } }
         NavigationLink("TablerGridB"  ) { gridBView .toolbar { myToolbar } }
+        NavigationLink("TablerGrid1"   ) { grid1View .toolbar { myToolbar } }
         NavigationLink("TablerGrid1B"  ) { grid1BView .toolbar { myToolbar } }
+        NavigationLink("TablerGridM"   ) { gridMView .toolbar { myToolbar } }
+        NavigationLink("TablerGridMB"  ) { gridMBView .toolbar { myToolbar } }
     }
     
     private var myToolbar: FruitToolbar {
@@ -227,14 +232,14 @@ struct ContentView: View {
                             header: header,
                             row: row,
                             rowBackground: rowBackgroundAction,
-                            rowOverlay: rowOverlayAction,
+                            rowOverlay: singleSelectOver,
                             results: fruits,
                             selected: $selected)
             } else {
                 TablerList1(listConfig,
                             row: row,
                             rowBackground: rowBackgroundAction,
-                            rowOverlay: rowOverlayAction,
+                            rowOverlay: singleSelectOver,
                             results: fruits,
                             selected: $selected)
             }
@@ -248,14 +253,14 @@ struct ContentView: View {
                             header: header,
                             row: row,
                             rowBackground: rowBackgroundAction,
-                            rowOverlay: rowOverlayAction,
+                            rowOverlay: multiSelectOver,
                             results: fruits,
                             selected: $mselected)
             } else {
                 TablerListM(listConfig,
                             row: row,
                             rowBackground: rowBackgroundAction,
-                            rowOverlay: rowOverlayAction,
+                            rowOverlay: multiSelectOver,
                             results: fruits,
                             selected: $mselected)
             }
@@ -286,14 +291,14 @@ struct ContentView: View {
                              header: header,
                              row: brow,
                              rowBackground: rowBackgroundAction,
-                             rowOverlay: rowOverlayAction,
+                             rowOverlay: singleSelectOver,
                              results: $fruits,
                              selected: $selected)
             } else {
                 TablerList1B(listConfig,
                              row: brow,
                              rowBackground: rowBackgroundAction,
-                             rowOverlay: rowOverlayAction,
+                             rowOverlay: singleSelectOver,
                              results: $fruits,
                              selected: $selected)
             }
@@ -307,14 +312,14 @@ struct ContentView: View {
                              header: header,
                              row: brow,
                              rowBackground: rowBackgroundAction,
-                             rowOverlay: rowOverlayAction,
+                             rowOverlay: multiSelectOver,
                              results: $fruits,
                              selected: $mselected)
             } else {
                 TablerListMB(listConfig,
                              row: brow,
                              rowBackground: rowBackgroundAction,
-                             rowOverlay: rowOverlayAction,
+                             rowOverlay: multiSelectOver,
                              results: $fruits,
                              selected: $mselected)
             }
@@ -347,14 +352,14 @@ struct ContentView: View {
                              header: header,
                              row: row,
                              rowBackground: rowBackgroundAction,
-                             rowOverlay: rowOverlayAction,
+                             rowOverlay: singleSelectOver,
                              results: fruits,
                              selected: $selected)
             } else {
                 TablerStack1(stackConfig,
                              row: row,
                              rowBackground: rowBackgroundAction,
-                             rowOverlay: rowOverlayAction,
+                             rowOverlay: singleSelectOver,
                              results: fruits,
                              selected: $selected)
             }
@@ -385,16 +390,58 @@ struct ContentView: View {
                               header: header,
                               row: brow,
                               rowBackground: rowBackgroundAction,
-                              rowOverlay: rowOverlayAction,
+                              rowOverlay: singleSelectOver,
                               results: $fruits,
                               selected: $selected)
             } else {
                 TablerStack1B(stackConfig,
                               row: brow,
                               rowBackground: rowBackgroundAction,
-                              rowOverlay: rowOverlayAction,
+                              rowOverlay: singleSelectOver,
                               results: $fruits,
                               selected: $selected)
+            }
+        }
+    }
+    
+    private var stackMView: some View {
+        SidewaysScroller(minWidth: minWidth) {
+            if headerize {
+                TablerStackM(stackConfig,
+                             header: header,
+                             row: row,
+                             rowBackground: rowBackgroundAction,
+                             rowOverlay: multiSelectOver,
+                             results: fruits,
+                             selected: $mselected)
+            } else {
+                TablerStackM(stackConfig,
+                             row: row,
+                             rowBackground: rowBackgroundAction,
+                             rowOverlay: multiSelectOver,
+                             results: fruits,
+                             selected: $mselected)
+            }
+        }
+    }
+    
+    private var stackMBView: some View {
+        SidewaysScroller(minWidth: minWidth) {
+            if headerize {
+                TablerStackMB(stackConfig,
+                              header: header,
+                              row: brow,
+                              rowBackground: rowBackgroundAction,
+                              rowOverlay: multiSelectOver,
+                              results: $fruits,
+                              selected: $mselected)
+            } else {
+                TablerStackMB(stackConfig,
+                              row: brow,
+                              rowBackground: rowBackgroundAction,
+                              rowOverlay: multiSelectOver,
+                              results: $fruits,
+                              selected: $mselected)
             }
         }
     }
@@ -437,13 +484,13 @@ struct ContentView: View {
                 TablerGrid1(gridConfig,
                             header: header,
                             row: rowItems,
-                            rowBackground: selectRowBackgroundAction,
+                            rowBackground: singleSelectBack,
                             results: fruits,
                             selected: $selected)
             } else {
                 TablerGrid1(gridConfig,
                             row: rowItems,
-                            rowBackground: selectRowBackgroundAction,
+                            rowBackground: singleSelectBack,
                             results: fruits,
                             selected: $selected)
             }
@@ -456,34 +503,81 @@ struct ContentView: View {
                 TablerGrid1B(gridConfig,
                              header: header,
                              row: rowItemsBound,
-                             rowBackground: selectRowBackgroundAction,
+                             rowBackground: singleSelectBack,
                              results: $fruits,
                              selected: $selected)
             } else {
                 TablerGrid1B(gridConfig,
                              row: rowItemsBound,
-                             rowBackground: selectRowBackgroundAction,
+                             rowBackground: singleSelectBack,
                              results: $fruits,
                              selected: $selected)
             }
         }
     }
     
-    private func isSelected(_ fruit: Fruit) -> Bool {
-        fruit.id == selected
+    private var gridMView: some View {
+        SidewaysScroller(minWidth: minWidth) {
+            if headerize {
+                TablerGridM(gridConfig,
+                            header: header,
+                            row: rowItems,
+                            rowBackground: multiSelectBack,
+                            results: fruits,
+                            selected: $mselected)
+            } else {
+                TablerGridM(gridConfig,
+                            row: rowItems,
+                            rowBackground: multiSelectBack,
+                            results: fruits,
+                            selected: $mselected)
+            }
+        }
     }
     
-    private func selectRowBackgroundAction(fruit: Fruit) -> some View {
-        RoundedRectangle(cornerRadius: 5)
-            .fill(isSelected(fruit) ? Color.accentColor : Color.clear)
+    private var gridMBView: some View {
+        SidewaysScroller(minWidth: minWidth) {
+            if headerize {
+                TablerGridMB(gridConfig,
+                             header: header,
+                             row: rowItemsBound,
+                             rowBackground: multiSelectBack,
+                             results: $fruits,
+                             selected: $mselected)
+            } else {
+                TablerGridMB(gridConfig,
+                             row: rowItemsBound,
+                             rowBackground: multiSelectBack,
+                             results: $fruits,
+                             selected: $mselected)
+            }
+        }
     }
     
-    private func rowOverlayAction(fruit: Fruit) -> some View {
+    private func singleSelectBack(fruit: Fruit) -> some View {
         RoundedRectangle(cornerRadius: 5)
-            .strokeBorder(isSelected(fruit) ? .white : .clear,
+            .fill(selected == fruit.id ? Color.accentColor : Color.clear)
+    }
+    
+    private func singleSelectOver(fruit: Fruit) -> some View {
+        RoundedRectangle(cornerRadius: 5)
+            .strokeBorder(selected == fruit.id ? .white : .clear,
                           lineWidth: 2,
                           antialiased: true)
     }
+    
+    private func multiSelectBack(fruit: Fruit) -> some View {
+        RoundedRectangle(cornerRadius: 5)
+            .fill(mselected.contains(fruit.id) ? Color.accentColor : Color.clear)
+    }
+    
+    private func multiSelectOver(fruit: Fruit) -> some View {
+        RoundedRectangle(cornerRadius: 5)
+            .strokeBorder(mselected.contains(fruit.id) ? .white : .clear,
+                          lineWidth: 2,
+                          antialiased: true)
+    }
+
     
     private func rowBackgroundAction(fruit: Fruit) -> some View {
         LinearGradient(gradient: .init(colors: [fruit.color, fruit.color.opacity(0.2)]),
