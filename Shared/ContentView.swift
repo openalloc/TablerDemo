@@ -206,6 +206,13 @@ struct ContentView: View {
                      colorize: $colorize)
     }
     
+
+    private func moveAction(from source: IndexSet, to destination: Int) {
+        fruits.move(fromOffsets: source, toOffset: destination)
+    }
+}
+
+extension ContentView {
     // MARK: - List Views
     
     private var listView: some View {
@@ -586,9 +593,6 @@ struct ContentView: View {
             .opacity(colorize ? 1 : 0)
     }
     
-    private func moveAction(from source: IndexSet, to destination: Int) {
-        fruits.move(fromOffsets: source, toOffset: destination)
-    }
 }
 
 struct ContentView_Previews: PreviewProvider {
