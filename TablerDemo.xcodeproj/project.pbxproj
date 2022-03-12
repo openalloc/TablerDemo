@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		4017FD5127CD310800585B3A /* Tabler in Frameworks */ = {isa = PBXBuildFile; productRef = 4017FD5027CD310800585B3A /* Tabler */; };
 		4017FD5327CD311500585B3A /* Tabler in Frameworks */ = {isa = PBXBuildFile; productRef = 4017FD5227CD311500585B3A /* Tabler */; };
+		402EE27127DD3A280094F2FA /* TablerScroller in Frameworks */ = {isa = PBXBuildFile; productRef = 402EE27027DD3A280094F2FA /* TablerScroller */; };
+		402EE27327DD3A2F0094F2FA /* TablerScroller in Frameworks */ = {isa = PBXBuildFile; productRef = 402EE27227DD3A2F0094F2FA /* TablerScroller */; };
 		4080E6AF27CA7ACD0046D1FC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4080E69D27CA7ACD0046D1FC /* Assets.xcassets */; };
 		4080E6B027CA7ACD0046D1FC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4080E69D27CA7ACD0046D1FC /* Assets.xcassets */; };
 		40A103EE27CA7BA400D83293 /* Fruit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40A103EB27CA7BA400D83293 /* Fruit.swift */; };
@@ -19,8 +21,6 @@
 		40A103F927CA7C0800D83293 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40A103F527CA7C0800D83293 /* ContentView.swift */; };
 		40B5585C27D2C2FF00AC89D2 /* FruitToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40B5585B27D2C2FF00AC89D2 /* FruitToolbar.swift */; };
 		40B5585D27D2C30000AC89D2 /* FruitToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40B5585B27D2C2FF00AC89D2 /* FruitToolbar.swift */; };
-		40F8D4A727D05988009F7331 /* SidewaysScroller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F8D4A427D05988009F7331 /* SidewaysScroller.swift */; };
-		40F8D4A827D05988009F7331 /* SidewaysScroller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F8D4A427D05988009F7331 /* SidewaysScroller.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,7 +33,6 @@
 		40A103F527CA7C0800D83293 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		40A1043227CA801400D83293 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		40B5585B27D2C2FF00AC89D2 /* FruitToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FruitToolbar.swift; sourceTree = "<group>"; };
-		40F8D4A427D05988009F7331 /* SidewaysScroller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SidewaysScroller.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,6 +40,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				402EE27327DD3A2F0094F2FA /* TablerScroller in Frameworks */,
 				4017FD5327CD311500585B3A /* Tabler in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -49,6 +49,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				402EE27127DD3A280094F2FA /* TablerScroller in Frameworks */,
 				4017FD5127CD310800585B3A /* Tabler in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -106,7 +107,6 @@
 		40F8D49C27D05959009F7331 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				40F8D4A427D05988009F7331 /* SidewaysScroller.swift */,
 				40B5585B27D2C2FF00AC89D2 /* FruitToolbar.swift */,
 			);
 			path = Helpers;
@@ -130,6 +130,7 @@
 			name = "TablerDemo (iOS)";
 			packageProductDependencies = (
 				4017FD5227CD311500585B3A /* Tabler */,
+				402EE27227DD3A2F0094F2FA /* TablerScroller */,
 			);
 			productName = "TablerDemo (iOS)";
 			productReference = 4080E6A227CA7ACD0046D1FC /* TablerDemo.app */;
@@ -150,6 +151,7 @@
 			name = "TablerDemo (macOS)";
 			packageProductDependencies = (
 				4017FD5027CD310800585B3A /* Tabler */,
+				402EE27027DD3A280094F2FA /* TablerScroller */,
 			);
 			productName = "TablerDemo (macOS)";
 			productReference = 4080E6A827CA7ACD0046D1FC /* TablerDemo.app */;
@@ -222,7 +224,6 @@
 				40A103EE27CA7BA400D83293 /* Fruit.swift in Sources */,
 				40A103F627CA7C0800D83293 /* TablerDemoApp.swift in Sources */,
 				40A103F827CA7C0800D83293 /* ContentView.swift in Sources */,
-				40F8D4A727D05988009F7331 /* SidewaysScroller.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -234,7 +235,6 @@
 				40A103EF27CA7BA400D83293 /* Fruit.swift in Sources */,
 				40A103F727CA7C0800D83293 /* TablerDemoApp.swift in Sources */,
 				40A103F927CA7C0800D83293 /* ContentView.swift in Sources */,
-				40F8D4A827D05988009F7331 /* SidewaysScroller.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -509,6 +509,14 @@
 		4017FD5227CD311500585B3A /* Tabler */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Tabler;
+		};
+		402EE27027DD3A280094F2FA /* TablerScroller */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = TablerScroller;
+		};
+		402EE27227DD3A2F0094F2FA /* TablerScroller */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = TablerScroller;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
