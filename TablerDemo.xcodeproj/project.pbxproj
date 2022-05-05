@@ -7,10 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4017FD5127CD310800585B3A /* Tabler in Frameworks */ = {isa = PBXBuildFile; productRef = 4017FD5027CD310800585B3A /* Tabler */; };
 		4017FD5327CD311500585B3A /* Tabler in Frameworks */ = {isa = PBXBuildFile; productRef = 4017FD5227CD311500585B3A /* Tabler */; };
-		40275A2427DD527400DEC308 /* Sideways in Frameworks */ = {isa = PBXBuildFile; productRef = 40275A2327DD527400DEC308 /* Sideways */; };
 		40275A2627DD528300DEC308 /* Sideways in Frameworks */ = {isa = PBXBuildFile; productRef = 40275A2527DD528300DEC308 /* Sideways */; };
+		4072671028248BC400E6713F /* Sideways in Frameworks */ = {isa = PBXBuildFile; productRef = 4072670F28248BC400E6713F /* Sideways */; };
+		4072671228248BC800E6713F /* Tabler in Frameworks */ = {isa = PBXBuildFile; productRef = 4072671128248BC800E6713F /* Tabler */; };
 		4080E6AF27CA7ACD0046D1FC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4080E69D27CA7ACD0046D1FC /* Assets.xcassets */; };
 		4080E6B027CA7ACD0046D1FC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4080E69D27CA7ACD0046D1FC /* Assets.xcassets */; };
 		40A103EE27CA7BA400D83293 /* Fruit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40A103EB27CA7BA400D83293 /* Fruit.swift */; };
@@ -24,6 +24,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4072670D28248B2F00E6713F /* SwiftTabler */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = SwiftTabler; path = ../SwiftTabler; sourceTree = "<group>"; };
+		4072670E28248B7500E6713F /* SwiftSideways */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = SwiftSideways; path = ../SwiftSideways; sourceTree = "<group>"; };
 		4080E69D27CA7ACD0046D1FC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4080E6A227CA7ACD0046D1FC /* TablerDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TablerDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4080E6A827CA7ACD0046D1FC /* TablerDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TablerDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -49,17 +51,27 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4017FD5127CD310800585B3A /* Tabler in Frameworks */,
-				40275A2427DD527400DEC308 /* Sideways in Frameworks */,
+				4072671228248BC800E6713F /* Tabler in Frameworks */,
+				4072671028248BC400E6713F /* Sideways in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4072670C28248B2F00E6713F /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				4072670D28248B2F00E6713F /* SwiftTabler */,
+				4072670E28248B7500E6713F /* SwiftSideways */,
+			);
+			name = Packages;
+			sourceTree = "<group>";
+		};
 		4080E69527CA7ACD0046D1FC = {
 			isa = PBXGroup;
 			children = (
+				4072670C28248B2F00E6713F /* Packages */,
 				40A1043227CA801400D83293 /* README.md */,
 				4080E69A27CA7ACD0046D1FC /* Shared */,
 				4080E6A927CA7ACD0046D1FC /* macOS */,
@@ -150,8 +162,8 @@
 			);
 			name = "TablerDemo (macOS)";
 			packageProductDependencies = (
-				4017FD5027CD310800585B3A /* Tabler */,
-				40275A2327DD527400DEC308 /* Sideways */,
+				4072670F28248BC400E6713F /* Sideways */,
+				4072671128248BC800E6713F /* Tabler */,
 			);
 			productName = "TablerDemo (macOS)";
 			productReference = 4080E6A827CA7ACD0046D1FC /* TablerDemo.app */;
@@ -165,7 +177,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1320;
-				LastUpgradeCheck = 1320;
+				LastUpgradeCheck = 1330;
 				TargetAttributes = {
 					4080E6A127CA7ACD0046D1FC = {
 						CreatedOnToolsVersion = 13.2.1;
@@ -419,6 +431,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = macOS/macOS.entitlements;
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -447,6 +460,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = macOS/macOS.entitlements;
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -502,21 +516,21 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		4017FD5027CD310800585B3A /* Tabler */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Tabler;
-		};
 		4017FD5227CD311500585B3A /* Tabler */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Tabler;
 		};
-		40275A2327DD527400DEC308 /* Sideways */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Sideways;
-		};
 		40275A2527DD528300DEC308 /* Sideways */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Sideways;
+		};
+		4072670F28248BC400E6713F /* Sideways */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Sideways;
+		};
+		4072671128248BC800E6713F /* Tabler */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Tabler;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
