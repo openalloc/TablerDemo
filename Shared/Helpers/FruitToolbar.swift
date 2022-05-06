@@ -20,12 +20,14 @@ import SwiftUI
 
 struct FruitToolbar: ToolbarContent {
     @Binding var headerize: Bool
+    @Binding var footerize: Bool
     @Binding var colorize: Bool
     
     var body: some ToolbarContent {
         ToolbarItemGroup {
-            Toggle(isOn: $colorize) { Text("Color") }
-            Toggle(isOn: $headerize) { Text("Header") }
+            Toggle(isOn: $colorize) { Image(systemName: colorize ? "paintpalette.fill" : "paintpalette") }
+            Toggle(isOn: $headerize) { Image(systemName: headerize ? "arrow.up.square.fill" : "arrow.up.square")  }
+            Toggle(isOn: $footerize) { Image(systemName: footerize ? "arrow.down.square.fill" : "arrow.down.square") }
         }
     }
 }
