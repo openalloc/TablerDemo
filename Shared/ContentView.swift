@@ -113,7 +113,7 @@ struct ContentView: View {
     var footerBackground: some View {
         Rectangle()
             .fill(
-                Color.gray
+                Color.blue
             )
     }
     
