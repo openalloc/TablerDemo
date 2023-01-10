@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		4017FD5327CD311500585B3A /* Tabler in Frameworks */ = {isa = PBXBuildFile; productRef = 4017FD5227CD311500585B3A /* Tabler */; };
-		40275A2627DD528300DEC308 /* Sideways in Frameworks */ = {isa = PBXBuildFile; productRef = 40275A2527DD528300DEC308 /* Sideways */; };
-		4072671028248BC400E6713F /* Sideways in Frameworks */ = {isa = PBXBuildFile; productRef = 4072670F28248BC400E6713F /* Sideways */; };
 		4072671228248BC800E6713F /* Tabler in Frameworks */ = {isa = PBXBuildFile; productRef = 4072671128248BC800E6713F /* Tabler */; };
 		4080E6AF27CA7ACD0046D1FC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4080E69D27CA7ACD0046D1FC /* Assets.xcassets */; };
 		4080E6B027CA7ACD0046D1FC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4080E69D27CA7ACD0046D1FC /* Assets.xcassets */; };
@@ -31,7 +29,6 @@
 
 /* Begin PBXFileReference section */
 		4072670D28248B2F00E6713F /* SwiftTabler */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = SwiftTabler; path = ../SwiftTabler; sourceTree = "<group>"; };
-		4072670E28248B7500E6713F /* SwiftSideways */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = SwiftSideways; path = ../SwiftSideways; sourceTree = "<group>"; };
 		4080E69D27CA7ACD0046D1FC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4080E6A227CA7ACD0046D1FC /* TablerDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TablerDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4080E6A827CA7ACD0046D1FC /* TablerDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TablerDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -52,7 +49,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				4017FD5327CD311500585B3A /* Tabler in Frameworks */,
-				40275A2627DD528300DEC308 /* Sideways in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -61,7 +57,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				4072671228248BC800E6713F /* Tabler in Frameworks */,
-				4072671028248BC400E6713F /* Sideways in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -72,7 +67,6 @@
 			isa = PBXGroup;
 			children = (
 				4072670D28248B2F00E6713F /* SwiftTabler */,
-				4072670E28248B7500E6713F /* SwiftSideways */,
 			);
 			name = Packages;
 			sourceTree = "<group>";
@@ -154,7 +148,6 @@
 			name = "TablerDemo (iOS)";
 			packageProductDependencies = (
 				4017FD5227CD311500585B3A /* Tabler */,
-				40275A2527DD528300DEC308 /* Sideways */,
 			);
 			productName = "TablerDemo (iOS)";
 			productReference = 4080E6A227CA7ACD0046D1FC /* TablerDemo.app */;
@@ -174,7 +167,6 @@
 			);
 			name = "TablerDemo (macOS)";
 			packageProductDependencies = (
-				4072670F28248BC400E6713F /* Sideways */,
 				4072671128248BC800E6713F /* Tabler */,
 			);
 			productName = "TablerDemo (macOS)";
@@ -537,14 +529,6 @@
 		4017FD5227CD311500585B3A /* Tabler */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Tabler;
-		};
-		40275A2527DD528300DEC308 /* Sideways */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Sideways;
-		};
-		4072670F28248BC400E6713F /* Sideways */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Sideways;
 		};
 		4072671128248BC800E6713F /* Tabler */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -6,13 +6,12 @@
 //
 
 import SwiftUI
-import Sideways
 import Tabler
 
 extension ContentView {
     
     var gridView: some View {
-        Sideways(minWidth: minWidth) {
+        VStack {
             if headerize && !footerize {
                 TablerGrid(gridConfig,
                            header: header,
@@ -42,7 +41,7 @@ extension ContentView {
     }
     
     var gridBView: some View {
-        Sideways(minWidth: minWidth) {
+        VStack {
             if headerize && !footerize {
                 TablerGridB(gridConfig,
                             header: header,
@@ -72,7 +71,7 @@ extension ContentView {
     }
     
     var grid1View: some View {
-        Sideways(minWidth: minWidth) {
+        VStack {
             if headerize && !footerize {
                 TablerGrid1(gridConfig,
                             header: header,
@@ -106,7 +105,7 @@ extension ContentView {
     }
     
     var grid1BView: some View {
-        Sideways(minWidth: minWidth) {
+        VStack {
             if headerize && !footerize {
                 TablerGrid1B(gridConfig,
                              header: header,
@@ -140,7 +139,7 @@ extension ContentView {
     }
     
     var gridMView: some View {
-        Sideways(minWidth: minWidth) {
+        VStack {
             if headerize && !footerize {
                 TablerGridM(gridConfig,
                             header: header,
@@ -174,7 +173,7 @@ extension ContentView {
     }
     
     var gridMBView: some View {
-        Sideways(minWidth: minWidth) {
+        VStack {
             if headerize && !footerize {
                 TablerGridMB(gridConfig,
                              header: header,

@@ -18,7 +18,6 @@
 
 import SwiftUI
 import Tabler
-import Sideways
 
 struct ContentView: View {
     
@@ -58,7 +57,7 @@ struct ContentView: View {
     }
     
     var listConfig: TablerListConfig<Fruit> {
-        TablerListConfig<Fruit>(onMove: moveAction, onHover: hoverAction)
+        TablerListConfig<Fruit>(onMove: moveAction, onDelete: deleteAction, onHover: hoverAction)
         //filter: { $0.weight > 10 }
     }
     
@@ -131,7 +130,7 @@ struct ContentView: View {
                 .onTapGesture { tablerSort(ctx, &fruits, \.weight) { $0.weight < $1.weight } }
                 .padding(columnPadding)
                 .background(headerBackground)
-            Text("Color")
+            Text("\(Image(systemName: "paintpalette"))")
                 .padding(columnPadding)
                 .background(headerBackground)
         }
@@ -272,6 +271,10 @@ struct ContentView: View {
     
     func moveAction(from source: IndexSet, to destination: Int) {
         fruits.move(fromOffsets: source, toOffset: destination)
+    }
+    
+    func deleteAction(offsets: IndexSet) {
+        fruits.remove(atOffsets: offsets)
     }
 }
 

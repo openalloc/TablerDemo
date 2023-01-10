@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import Sideways
 import Tabler
 
 
@@ -15,7 +14,7 @@ extension ContentView {
     // MARK: - Stack Views
     
     var stackView: some View {
-        Sideways(minWidth: minWidth) {
+        VStack {
             if headerize && !footerize {
                 TablerStack(stackConfig,
                             header: header,
@@ -45,7 +44,7 @@ extension ContentView {
     }
     
     var stack1View: some View {
-        Sideways(minWidth: minWidth) {
+        VStack {
             if headerize && !footerize {
                 TablerStack1(stackConfig,
                              header: header,
@@ -83,7 +82,7 @@ extension ContentView {
     }
     
     var stackBView: some View {
-        Sideways(minWidth: minWidth) {
+        VStack {
             if headerize && !footerize {
                 TablerStackB(stackConfig,
                              header: header,
@@ -113,7 +112,7 @@ extension ContentView {
     }
     
     var stack1BView: some View {
-        Sideways(minWidth: minWidth) {
+        VStack {
             if headerize && !footerize {
                 TablerStack1B(stackConfig,
                               header: header,
@@ -151,7 +150,7 @@ extension ContentView {
     }
     
     var stackMView: some View {
-        Sideways(minWidth: minWidth) {
+        VStack {
             if headerize && !footerize {
                 TablerStackM(stackConfig,
                              header: header,
@@ -189,7 +188,7 @@ extension ContentView {
     }
     
     var stackMBView: some View {
-        Sideways(minWidth: minWidth) {
+        VStack {
             if headerize && !footerize {
                 TablerStackMB(stackConfig,
                               header: header,

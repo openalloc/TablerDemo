@@ -6,13 +6,12 @@
 //
 
 import SwiftUI
-import Sideways
 import Tabler
 
 extension ContentView {
 
     var listView: some View {
-        Sideways(minWidth: minWidth) {
+        VStack {
             if headerize && !footerize {
                 TablerList(listConfig,
                            header: header,
@@ -42,7 +41,7 @@ extension ContentView {
     }
     
     var list1View: some View {
-        Sideways(minWidth: minWidth) {
+        VStack {
             if headerize && !footerize {
                 TablerList1(listConfig,
                             header: header,
@@ -80,7 +79,7 @@ extension ContentView {
     }
     
     var listMView: some View {
-        Sideways(minWidth: minWidth) {
+        VStack {
             if headerize && !footerize {
                 TablerListM(listConfig,
                             header: header,
@@ -118,7 +117,7 @@ extension ContentView {
     }
     
     var listBView: some View {
-        Sideways(minWidth: minWidth) {
+        VStack {
             if headerize && !footerize {
                 TablerListB(listConfig,
                             header: header,
@@ -148,7 +147,7 @@ extension ContentView {
     }
     
     var list1BView: some View {
-        Sideways(minWidth: minWidth) {
+        VStack {
             if headerize && !footerize {
                 TablerList1B(listConfig,
                              header: header,
@@ -186,7 +185,7 @@ extension ContentView {
     }
     
     var listMBView: some View {
-        Sideways(minWidth: minWidth) {
+        VStack {
             if headerize && !footerize {
                 TablerListMB(listConfig,
                              header: header,
