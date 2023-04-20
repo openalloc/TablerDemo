@@ -26,13 +26,14 @@ struct Fruit: Identifiable {
     init(_ id: String = "",
          _ name: String = "",
          _ weight: Double = 0,
-         _ color: Color = .gray) {
+         _ color: Color = .gray)
+    {
         self.id = id
         self.name = name
         self.weight = weight
         self.color = color
     }
-    
+
     static var bootstrap: [Fruit] = [
         Fruit("🍌", "Banana", 118, .brown),
         Fruit("🍓", "Strawberry", 12, .red),

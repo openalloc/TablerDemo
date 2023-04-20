@@ -8,11 +8,9 @@
 import SwiftUI
 import Tabler
 
-
 extension ContentView {
-    
     // MARK: - Stack Views
-    
+
     var stackView: some View {
         VStack {
             if headerize && !footerize {
@@ -42,7 +40,7 @@ extension ContentView {
             }
         }
     }
-    
+
     var stack1View: some View {
         VStack {
             if headerize && !footerize {
@@ -80,7 +78,7 @@ extension ContentView {
             }
         }
     }
-    
+
     var stackBView: some View {
         VStack {
             if headerize && !footerize {
@@ -110,7 +108,7 @@ extension ContentView {
             }
         }
     }
-    
+
     var stack1BView: some View {
         VStack {
             if headerize && !footerize {
@@ -148,7 +146,7 @@ extension ContentView {
             }
         }
     }
-    
+
     var stackMView: some View {
         VStack {
             if headerize && !footerize {
@@ -186,7 +184,7 @@ extension ContentView {
             }
         }
     }
-    
+
     var stackMBView: some View {
         VStack {
             if headerize && !footerize {
@@ -224,5 +222,4 @@ extension ContentView {
             }
         }
     }
-
 }

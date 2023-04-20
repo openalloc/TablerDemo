@@ -9,7 +9,6 @@ import SwiftUI
 import Tabler
 
 extension ContentView {
-
     var listView: some View {
         VStack {
             if headerize && !footerize {
@@ -39,7 +38,7 @@ extension ContentView {
             }
         }
     }
-    
+
     var list1View: some View {
         VStack {
             if headerize && !footerize {
@@ -77,7 +76,7 @@ extension ContentView {
             }
         }
     }
-    
+
     var listMView: some View {
         VStack {
             if headerize && !footerize {
@@ -115,7 +114,7 @@ extension ContentView {
             }
         }
     }
-    
+
     var listBView: some View {
         VStack {
             if headerize && !footerize {
@@ -145,7 +144,7 @@ extension ContentView {
             }
         }
     }
-    
+
     var list1BView: some View {
         VStack {
             if headerize && !footerize {
@@ -183,7 +182,7 @@ extension ContentView {
             }
         }
     }
-    
+
     var listMBView: some View {
         VStack {
             if headerize && !footerize {
@@ -201,7 +200,7 @@ extension ContentView {
                              rowOverlay: multiSelectOver,
                              results: $fruits,
                              selected: $mselected)
-            } else  if headerize && footerize {
+            } else if headerize && footerize {
                 TablerListMB(listConfig,
                              header: header,
                              footer: footer,
@@ -221,5 +220,4 @@ extension ContentView {
             }
         }
     }
-
 }

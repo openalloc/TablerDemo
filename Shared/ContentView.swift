@@ -20,86 +20,85 @@ import SwiftUI
 import Tabler
 
 struct ContentView: View {
-    
     typealias Context = TablerContext<Fruit>
     typealias Sort = TablerSort<Fruit>
-    
+
     // MARK: - Parameters
-    
+
     @State var fruits: [Fruit]
-    
+
     public init(_ fruits: [Fruit]) {
         _fruits = State(initialValue: fruits)
     }
-    
+
     // MARK: - Locals
-    
+
     let columnSpacing: CGFloat = 10
     let minWidth: CGFloat = 450
     let title = "Tabler Demo"
-    
-    var gridItems: [GridItem] {[
+
+    var gridItems: [GridItem] { [
         GridItem(.flexible(minimum: 40, maximum: 60), spacing: columnSpacing, alignment: .leading),
         GridItem(.flexible(minimum: 100, maximum: 200), spacing: columnSpacing, alignment: .leading),
         GridItem(.flexible(minimum: 100, maximum: 140), spacing: columnSpacing, alignment: .trailing),
         GridItem(.flexible(minimum: 50, maximum: 60), spacing: columnSpacing, alignment: .leading),
-    ]}
-    
+    ] }
+
     @State var selected: Fruit.ID? = nil
     @State var mselected = Set<Fruit.ID>()
     @State var colorize: Bool = false
     @State var headerize: Bool = true
     @State var footerize: Bool = false
     @State var hovered: Fruit.ID? = nil
-    
+
     var hoverColor: Color {
         colorize ? .clear : .orange.opacity(0.3)
     }
-    
+
     var listConfig: TablerListConfig<Fruit> {
         TablerListConfig<Fruit>(onMove: moveAction, onDelete: deleteAction, onHover: hoverAction)
-        //filter: { $0.weight > 10 }
+        // filter: { $0.weight > 10 }
     }
-    
+
     var stackConfig: TablerStackConfig<Fruit> {
         TablerStackConfig<Fruit>(onHover: hoverAction)
     }
-    
+
     var gridConfig: TablerGridConfig<Fruit> {
         TablerGridConfig<Fruit>(gridItems: gridItems, onHover: hoverAction)
     }
-    
+
     // MARK: - Views
-    
+
     var body: some View {
         NavigationView {
             List {
                 Section("List-based") {
                     lists
                 }
-                
+
                 Section("Stack-based") {
                     stacks
                 }
-                
+
                 Section("Grid-based") {
                     grids
                 }
             }
-#if os(iOS)
+            #if os(iOS)
             .navigationTitle(title)
-#endif
+            #endif
         }
         .navigationViewStyle(DoubleColumnNavigationViewStyle())
-#if os(macOS)
-        .navigationTitle(title)
-#endif
+        #if os(macOS)
+            .navigationTitle(title)
+        #endif
     }
-    
+
     var columnPadding: EdgeInsets {
         EdgeInsets(top: 0, leading: 5, bottom: 0, trailing: 5)
     }
-    
+
     var headerBackground: some View {
         RoundedRectangle(cornerRadius: 5)
             .fill(
@@ -108,14 +107,14 @@ struct ContentView: View {
                                endPoint: .bottom)
             )
     }
-    
+
     var footerBackground: some View {
         Rectangle()
             .fill(
                 Color.blue
             )
     }
-    
+
     func header(ctx: Binding<Context>) -> some View {
         LazyVGrid(columns: gridItems, alignment: .leading) {
             Sort.columnTitle("ID", ctx, \.id)
@@ -135,8 +134,8 @@ struct ContentView: View {
                 .background(headerBackground)
         }
     }
-    
-    func footer(ctx: Binding<Context>) -> some View {
+
+    func footer(ctx _: Binding<Context>) -> some View {
         LazyVGrid(columns: gridItems, alignment: .leading) {
             Text("ID")
                 .padding(columnPadding)
@@ -152,14 +151,14 @@ struct ContentView: View {
                 .background(footerBackground)
         }
     }
-    
+
     // UNBOUND value row (read-only)
     func row(element: Fruit) -> some View {
         LazyVGrid(columns: gridItems, alignment: .leading) {
             rowItems(element: element)
         }
     }
-    
+
     @ViewBuilder
     func rowItems(element: Fruit) -> some View {
         Text(element.id)
@@ -173,14 +172,14 @@ struct ContentView: View {
             .foregroundColor(element.color)
             .border(colorize ? Color.primary : Color.clear)
     }
-    
+
     // BOUND value row (with direct editing)
     func brow(element: Binding<Fruit>) -> some View {
         LazyVGrid(columns: gridItems, alignment: .leading) {
             rowItemsBound(element: element)
         }
     }
-    
+
     @ViewBuilder
     func rowItemsBound(element: Binding<Fruit>) -> some View {
         Text(element.wrappedValue.id)
@@ -195,84 +194,84 @@ struct ContentView: View {
             .padding(columnPadding)
             .labelsHidden()
     }
-    
+
     @ViewBuilder
     var lists: some View {
-        NavigationLink("TablerList"   ) { listView  .toolbar { myToolbar } }
-        NavigationLink("TablerListB"  ) { listBView  .toolbar { myToolbar } }
-        NavigationLink("TablerList1"  ) { list1View .toolbar { myToolbar } }
-        NavigationLink("TablerList1B" ) { list1BView .toolbar { myToolbar } }
-        NavigationLink("TablerListM"  ) { listMView .toolbar { myToolbar } }
-        NavigationLink("TablerListMB" ) { listMBView .toolbar { myToolbar } }
+        NavigationLink("TablerList") { listView.toolbar { myToolbar } }
+        NavigationLink("TablerListB") { listBView.toolbar { myToolbar } }
+        NavigationLink("TablerList1") { list1View.toolbar { myToolbar } }
+        NavigationLink("TablerList1B") { list1BView.toolbar { myToolbar } }
+        NavigationLink("TablerListM") { listMView.toolbar { myToolbar } }
+        NavigationLink("TablerListMB") { listMBView.toolbar { myToolbar } }
     }
-    
+
     @ViewBuilder
     var stacks: some View {
-        NavigationLink("TablerStack"  ) { stackView .toolbar { myToolbar } }
-        NavigationLink("TablerStackB" ) { stackBView .toolbar { myToolbar } }
-        NavigationLink("TablerStack1" ) { stack1View .toolbar { myToolbar } }
-        NavigationLink("TablerStack1B") { stack1BView .toolbar { myToolbar } }
-        NavigationLink("TablerStackM" ) { stackMView .toolbar { myToolbar } }
-        NavigationLink("TablerStackMB" ) { stackMBView .toolbar { myToolbar } }
+        NavigationLink("TablerStack") { stackView.toolbar { myToolbar } }
+        NavigationLink("TablerStackB") { stackBView.toolbar { myToolbar } }
+        NavigationLink("TablerStack1") { stack1View.toolbar { myToolbar } }
+        NavigationLink("TablerStack1B") { stack1BView.toolbar { myToolbar } }
+        NavigationLink("TablerStackM") { stackMView.toolbar { myToolbar } }
+        NavigationLink("TablerStackMB") { stackMBView.toolbar { myToolbar } }
     }
-    
+
     @ViewBuilder
     var grids: some View {
-        NavigationLink("TablerGrid"   ) { gridView .toolbar { myToolbar } }
-        NavigationLink("TablerGridB"  ) { gridBView .toolbar { myToolbar } }
-        NavigationLink("TablerGrid1"   ) { grid1View .toolbar { myToolbar } }
-        NavigationLink("TablerGrid1B"  ) { grid1BView .toolbar { myToolbar } }
-        NavigationLink("TablerGridM"   ) { gridMView .toolbar { myToolbar } }
-        NavigationLink("TablerGridMB"  ) { gridMBView .toolbar { myToolbar } }
+        NavigationLink("TablerGrid") { gridView.toolbar { myToolbar } }
+        NavigationLink("TablerGridB") { gridBView.toolbar { myToolbar } }
+        NavigationLink("TablerGrid1") { grid1View.toolbar { myToolbar } }
+        NavigationLink("TablerGrid1B") { grid1BView.toolbar { myToolbar } }
+        NavigationLink("TablerGridM") { gridMView.toolbar { myToolbar } }
+        NavigationLink("TablerGridMB") { gridMBView.toolbar { myToolbar } }
     }
-    
+
     var myToolbar: FruitToolbar {
         FruitToolbar(headerize: $headerize,
                      footerize: $footerize,
                      colorize: $colorize)
     }
-    
+
     func singleSelectBack(fruit: Fruit) -> some View {
         RoundedRectangle(cornerRadius: 5)
             .fill(Color.accentColor.opacity(selected == fruit.id ? 1 : (hovered == fruit.id ? 0.2 : 0.0)))
     }
-    
+
     func singleSelectOver(fruit: Fruit) -> some View {
         RoundedRectangle(cornerRadius: 5)
             .strokeBorder(selected == fruit.id ? .white : .clear,
                           lineWidth: 2,
                           antialiased: true)
     }
-    
+
     func multiSelectBack(fruit: Fruit) -> some View {
         RoundedRectangle(cornerRadius: 5)
             .fill(Color.accentColor.opacity(mselected.contains(fruit.id) ? 1 : (hovered == fruit.id ? 0.2 : 0.0)))
     }
-    
+
     func multiSelectOver(fruit: Fruit) -> some View {
         RoundedRectangle(cornerRadius: 5)
             .strokeBorder(mselected.contains(fruit.id) ? .white : .clear,
                           lineWidth: 2,
                           antialiased: true)
     }
-    
+
     func rowBackground(fruit: Fruit) -> some View {
         LinearGradient(gradient: .init(colors: [fruit.color, fruit.color.opacity(0.5)]),
                        startPoint: .top,
                        endPoint: .bottom)
             .opacity(colorize ? 1.0 : (hovered == fruit.id ? 0.2 : 0.0))
     }
-    
+
     // MARK: - Action Handlers
-    
+
     func hoverAction(fruitID: Fruit.ID, isHovered: Bool) {
         if isHovered { hovered = fruitID } else { hovered = nil }
     }
-    
+
     func moveAction(from source: IndexSet, to destination: Int) {
         fruits.move(fromOffsets: source, toOffset: destination)
     }
-    
+
     func deleteAction(offsets: IndexSet) {
         fruits.remove(atOffsets: offsets)
     }

@@ -9,7 +9,6 @@ import SwiftUI
 import Tabler
 
 extension ContentView {
-    
     var gridView: some View {
         VStack {
             if headerize && !footerize {
@@ -39,7 +38,7 @@ extension ContentView {
             }
         }
     }
-    
+
     var gridBView: some View {
         VStack {
             if headerize && !footerize {
@@ -69,7 +68,7 @@ extension ContentView {
             }
         }
     }
-    
+
     var grid1View: some View {
         VStack {
             if headerize && !footerize {
@@ -103,7 +102,7 @@ extension ContentView {
             }
         }
     }
-    
+
     var grid1BView: some View {
         VStack {
             if headerize && !footerize {
@@ -137,7 +136,7 @@ extension ContentView {
             }
         }
     }
-    
+
     var gridMView: some View {
         VStack {
             if headerize && !footerize {
@@ -171,7 +170,7 @@ extension ContentView {
             }
         }
     }
-    
+
     var gridMBView: some View {
         VStack {
             if headerize && !footerize {
